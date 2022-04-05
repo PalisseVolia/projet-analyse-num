@@ -95,7 +95,7 @@ a = 0
 b = 3
 errbalayconst = []
 for i in range(0,len(minbalayconst)):
-    errbalayconst.append(abs(minbalayconst[i]-min_re))
+    errbalayconst.append(abs(minbalayconst[i]-minimum_reel))
     
 x = [k for k in np.arange(a,b,np.abs(a+b)/len(minbalayconst))]
 plt.plot(x,minbalayconst)
@@ -105,7 +105,7 @@ plt.plot(x,minbalayconst)
 print("Question 4 ")
 print("Par balayage constant, on obtient minimum = ")
 print(balayage_constant(func, 0, 3,10000))
-
+print()
 #-------------------------------- Question 5  ---------------------------------
 
 #Sur papier
@@ -113,16 +113,16 @@ print(balayage_constant(func, 0, 3,10000))
 #-------------------------------- Question 6  ---------------------------------
 
 def gradient_1D(func,dfunc,a,b,u,n):
-    x0=a
-    for i in range(0,n):
-        xn = x0 + u * dfunc(x0)
-        x0 = xn
+    x0 = b
+    xn = x0
+    for i in range(1,n):
+        xn = xn + u * dfunc(xn)
     minimum = func(xn) 
     return minimum
 
 print("Question 6 ")
 print("Par gradient 1D, on obtient minimum = ")
-print(gradient_1D(func, dfunc, 0, 3, -0.0001, 10))
+print(gradient_1D(func, dfunc, 0, 3, -0.0001, 10000))
 print()
 
 
