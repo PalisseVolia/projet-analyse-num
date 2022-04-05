@@ -5,6 +5,7 @@
 #------------------------------------------------------------------------------
 #%%
 
+from turtle import color
 import numpy as np
 import matplotlib.pyplot as plt
 import math
@@ -35,6 +36,7 @@ def balayage_constant(func,a,b,N):
         bi=bi+dx
     return minimum
 
+minbalayalea = []
 def balayage_aleatoire(func,a,b,N):
     val = np.zeros(N+1)
     for i in range(len(val)):
@@ -47,6 +49,7 @@ def balayage_aleatoire(func,a,b,N):
     #On cherche la valeur minimum en utilisant les nombres aléatoires comme
     #antécédents de la fonction
         if func(i)<minimum:
+            minbalayalea.append(minimum)
             minimum = func(i)
     return minimum
 
@@ -93,12 +96,21 @@ plt.close()
 #-------------------------------- Question 3  ---------------------------------
 a = 0
 b = 3
+size = max(len(minbalayalea),len(minbalayconst))
+
 errbalayconst = []
+errbalayconst = np.zeros(size)
 for i in range(0,len(minbalayconst)):
-    errbalayconst.append(abs(minbalayconst[i]-min_re))
+    errbalayconst[i] = abs(minbalayconst[i]-minimum_reel)
+errbalayalea = []
+errbalayalea = np.zeros(size)
+for i in range(0,len(minbalayalea)):
+    errbalayalea[i] = abs(minbalayalea[i]-minimum_reel)
     
-x = [k for k in np.arange(a,b,np.abs(a+b)/len(minbalayconst))]
-plt.plot(x,minbalayconst)
+
+x = [k for k in range(0,size)]
+plt.plot(x,errbalayconst, color = 'red')
+plt.plot(x,errbalayalea, color = 'blue')
 
 #-------------------------------- Question 4  ---------------------------------
 
