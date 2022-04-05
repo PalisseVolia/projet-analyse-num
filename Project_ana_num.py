@@ -69,8 +69,14 @@ def graph_2D(func,a,b):
     for i in np.arange(a,b,0.001):
         result.append(func(i))
     plt.plot(x,result)
+    
+minimum_reel = 4.615099820540249
+#= 5 - 2 / (3 * sqrt(3))
 
 print("Question 2 ")
+
+print("La valeur réelle minimum = ")
+print(minimum_reel)
 
 print("Par balayage constant, on obtient minimum = ")
 print(balayage_constant(func, 0, 3,100))
@@ -100,9 +106,9 @@ print(balayage_constant(func, 0, 3,10000))
 
 #-------------------------------- Question 6  ---------------------------------
 
-def gradient_1D(func,dfunc,a,b,u):
+def gradient_1D(func,dfunc,a,b,u,n):
     x0=a
-    for i in range(0,10):
+    for i in range(0,n):
         xn = x0 + u * dfunc(x0)
         x0 = xn
     minimum = func(xn) 
@@ -110,7 +116,7 @@ def gradient_1D(func,dfunc,a,b,u):
 
 print("Question 6 ")
 print("Par gradient 1D, on obtient minimum = ")
-print(gradient_1D(func, dfunc, 0, 3, -0.001))
+print(gradient_1D(func, dfunc, 0, 3, -0.0001, 10))
 print()
 
 
