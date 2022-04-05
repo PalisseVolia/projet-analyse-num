@@ -101,11 +101,15 @@ size = max(len(minbalayalea),len(minbalayconst))
 errbalayconst = []
 errbalayconst = np.zeros(size)
 for i in range(0,len(minbalayconst)):
+    errbalayconst[i] = abs(minbalayconst[i]-minimum_reel)
+errbalayalea = []
+errbalayalea = np.zeros(size)
 for i in range(0,len(minbalayalea)):
     errbalayalea[i] = abs(minbalayalea[i]-minimum_reel)
     
 
 x = [k for k in range(0,size)]
+plt.plot(x,errbalayconst, color = 'red')
 plt.plot(x,errbalayalea, color = 'blue')
 
 #-------------------------------- Question 4  ---------------------------------
