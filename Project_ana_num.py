@@ -17,6 +17,7 @@ import random
 
 #-------------------------------- Question 1  ---------------------------------
 
+minbalayconst = []
 def balayage_constant(func,a,b,N):
     dx = (b-a)/N
     ai = a
@@ -27,11 +28,11 @@ def balayage_constant(func,a,b,N):
         for j in (ai,bi):
         #On cherche les minimums dans les sous-intervalles
             if (func(j)<minimum):
+                minbalayconst.append(minimum)
                 minimum=func(j)
         #on modifie les sous-intervalles
         ai=bi
         bi=bi+dx
-    
     return minimum
 
 def balayage_aleatoire(func,a,b,N):
@@ -61,7 +62,6 @@ def dfunc(x):
 def droite(x):
     return 0
 
-
 def graph_2D(func,a,b):
 #Graph de la fonction
     x = [k for k in np.arange(a,b,0.001)]
@@ -70,13 +70,13 @@ def graph_2D(func,a,b):
         result.append(func(i))
     plt.plot(x,result)
 
-print("Question 2 ")
+print("Question 2 ") 
 
 print("Par balayage constant, on obtient minimum = ")
-print(balayage_constant(func, 0, 3,100))
+print(balayage_constant(func, 0, 3,1000))
 
 print("Par balayage aléatoire, on obtient minimum = ")
-print(balayage_aleatoire(func, 0, 3,100))
+print(balayage_aleatoire(func, 0, 3,1000))
 print()
 
 graph_2D(func,0,3)
@@ -85,8 +85,14 @@ graph_2D(droite,0,3)
 
 plt.close()
 #-------------------------------- Question 3  ---------------------------------
-
-#A faire
+a = 0
+b = 3
+errbalayconst = []
+for i in range(0,len(minbalayconst)):
+    errbalayconst.append(abs(minbalayconst[i]-min_re))
+    
+x = [k for k in np.arange(a,b,np.abs(a+b)/len(minbalayconst))]
+plt.plot(x,minbalayconst)
 
 #-------------------------------- Question 4  ---------------------------------
 
@@ -139,13 +145,13 @@ def graph_3D(func,a,b):
         result.append(func(i))
     plt.plot(x,result)
 
-ax = plt.axes(projection='3d')
+# ax = plt.axes(projection='3d')
 
 # Data for a three-dimensional line
-zline = np.linspace(0, 15, 1000)
-xline = np.sin(zline)
-yline = np.cos(zline)
-ax.plot3D(xline, yline, zline, 'gray')
+# zline = np.linspace(0, 15, 1000)
+# xline = np.sin(zline)
+# yline = np.cos(zline)
+# ax.plot3D(xline, yline, zline, 'gray')
 
 #-------------------------------- Question 2  ---------------------------------
 
