@@ -15,6 +15,8 @@ import random
 #         B.   Optimisation d'une fonction d'une variable réelle
 #------------------------------------------------------------------------------
 
+print("B.   Optimisation d'une fonction d'une variable réelle")
+print()
 
 #-------------------------------- Question 1  ---------------------------------
 
@@ -146,6 +148,7 @@ print()
 #         C.   Optimisation d'une fonction de deux variables réelles
 #------------------------------------------------------------------------------
 
+print("C.   Optimisation d'une fonction de deux variables réelles")
 
 #-------------------------------- Question 1  ---------------------------------
 
@@ -153,23 +156,42 @@ def g_ab(x,y,a,b):
     return (x**2)/a + (y**2)/b
 
 def h(x,y):
-    return math.cos(x) * math.sin(y)
+    return np.cos(x) * np.sin(y)
     
-def graph_3D(func,a,b):
-#Graph de la fonction
-    x = [k for k in np.arange(a,b,0.0001)]
-    result = []
-    for i in np.arange(a,b,0.001):
-        result.append(func(i))
-    plt.plot(x,result)
+#Graph de g_ab
+def plot_g_ab(a,b):
+    x = np.linspace(-100, 100, 100)
+    y = np.linspace(-100, 100, 100)
+    X, Y = np.meshgrid(x, y)
+    Z = g_ab(X,Y,a,b)
+    fig = plt.figure(figsize = (10,7))
+    ax = plt.axes(projection='3d')
+    ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
+    cmap='jet', edgecolor='none')
+    ax.set_title("g(x,y)_2,2/7", fontsize = 13)
+    ax.set_xlabel('x', fontsize = 11)
+    ax.set_ylabel('y', fontsize = 11)
+    ax.set_zlabel('Z', fontsize = 10)
 
-# ax = plt.axes(projection='3d')
+#Graph de h
+def plot_h():
+    x = np.linspace(-100, 100, 100)
+    y = np.linspace(-100, 100, 100)
+    X, Y = np.meshgrid(x, y)
+    Z = h(X,Y)
+    fig2 = plt.figure(figsize = (10,7))
+    ax = plt.axes(projection='3d')
+    ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
+    cmap='jet', edgecolor='none')
+    ax.set_title("h(x,y)", fontsize = 13)
+    ax.set_xlabel('x', fontsize = 11)
+    ax.set_ylabel('y', fontsize = 11)
+    ax.set_zlabel('Z', fontsize = 10)
+    
+print("Question 1")
+plot_g_ab(2,2/7)
+plot_h()
 
-# Data for a three-dimensional line
-# zline = np.linspace(0, 15, 1000)
-# xline = np.sin(zline)
-# yline = np.cos(zline)
-# ax.plot3D(xline, yline, zline, 'gray')
 
 #-------------------------------- Question 2  ---------------------------------
 
