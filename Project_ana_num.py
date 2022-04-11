@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import math
 import random
 
+
 #------------------------------------------------------------------------------
 #         B.   Optimisation d'une fonction d'une variable réelle
 #------------------------------------------------------------------------------
@@ -196,25 +197,92 @@ def plot_3D(func):
 print("Question 1")
 plot_g_ab(2,2/7)
 plot_3D(h)
-
+print()
 
 
 
 #-------------------------------- Question 2  ---------------------------------
 
+print("Question 2")
+#j'ai pas trop compris 
 
 #-------------------------------- Question 3  ---------------------------------
 
+def grad_g_ab(a,b,x,y):
+    grad = np.zeros(2)
+    grad[0] = dg_ab_dx(a,b,x) #dg_ab/dx
+    grad[1] = dg_ab_dy(a,b,y) #dg_ab/dy
+    return grad
 
+def dg_ab_dx(a,b,x,y):
+    return (2 * x) / a
+
+def dg_ab_dy(a,b,x,y):
+    return(2 * y) / b
+
+def grad_h(x,y):
+    grad = np.zeros(2)
+    grad[0] = dh_dx(x,y) #dh/dx
+    grad[1] = dh_dy(x,y) #dh/dy
+    return grad
+
+def dh_dx(x,y):
+    return - np.sin(x) * np.sin(y)
+
+def dh_dy(x,y):
+    return np.cos(x) * np.cos(y)
+
+
+
+def affiche_gradient(tab):
+    for i in tab:
+        print("[ "+ str(i) + "]")
 
 #-------------------------------- Question 4  ---------------------------------
 
+def norme_gradient(tab):
+    return np.sqrt(tab[0]**2 + tab[1]**2)
 
+tab_2d = [
+    [  0 ,  0 ],
+    [ 7 ,  1.5],
+    [ 10 , 10 ],
+    [-10 , -10],
+    [-54 , 20 ],
+    [42  , 58 ],
+    [100 , -26]
+]
+
+
+print("Calculs du gradient et de sa norme de h(x,y) en quelques points :")
+for i in tab_2d:
+    grad = grad_h(i[0],i[1])
+    print("x = ", str(i[0]) + "; y = "+ str(i[1]))
+    print("gradient = ")
+    affiche_gradient(grad)
+    print("Sa norme est  : " + str(norme_gradient(grad)))
+    print()
+    
+print("Calculs du gradient et de sa norme de g_2,2/7(x,y) en quelques points :")
+for i in tab_2d:
+    grad = grad_g_ab(2,2/7,i[0],i[1])
+    print("x = ", str(i[0]) + "; y = "+ str(i[1]))
+    print("gradient = ")
+    affiche_gradient(grad)
+    print("Sa norme est  : " + str(norme_gradient(grad)))
+    print()
+        
 
 #-------------------------------- Question 5  ---------------------------------
 
 def gradpc(eps, m, u, x0, y0, df1, df2):
-    print("a")
+    nb_iteration = 0
+    grad = df1(x0,y0) + df2(x0,y0)
+    
+    while(norme_gradient(grad)>eps or nb_iteration < 10000 ):
+        
+        nb_iteration += 1
+        
 
 #-------------------------------- Question 6  ---------------------------------
 
