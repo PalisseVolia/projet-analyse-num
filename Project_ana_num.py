@@ -160,11 +160,13 @@ def h(x,y):
     
 #Graph de g_ab
 def plot_g_ab(a,b):
+    plt.ion()
     x = np.linspace(-100, 100, 100)
     y = np.linspace(-100, 100, 100)
     X, Y = np.meshgrid(x, y)
     Z = g_ab(X,Y,a,b)
-    fig = plt.figure(figsize = (10,7))
+    
+    fig = plt.figure(figsize = (10,10))
     ax = plt.axes(projection='3d')
     ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
     cmap='jet', edgecolor='none')
@@ -172,14 +174,17 @@ def plot_g_ab(a,b):
     ax.set_xlabel('x', fontsize = 11)
     ax.set_ylabel('y', fontsize = 11)
     ax.set_zlabel('Z', fontsize = 10)
+    
+   
+
 
 #Graph de h
-def plot_h():
+def plot_3D(func):
     x = np.linspace(-100, 100, 100)
     y = np.linspace(-100, 100, 100)
     X, Y = np.meshgrid(x, y)
-    Z = h(X,Y)
-    fig2 = plt.figure(figsize = (10,7))
+    Z = func(X,Y)
+    fig2 = plt.figure(figsize = (10,10))
     ax = plt.axes(projection='3d')
     ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
     cmap='jet', edgecolor='none')
@@ -190,11 +195,12 @@ def plot_h():
     
 print("Question 1")
 plot_g_ab(2,2/7)
-plot_h()
+plot_3D(h)
+
+
 
 
 #-------------------------------- Question 2  ---------------------------------
-
 
 
 #-------------------------------- Question 3  ---------------------------------
