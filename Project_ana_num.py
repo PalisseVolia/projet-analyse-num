@@ -210,15 +210,21 @@ print("Question 2")
 
 def grad_g_ab(a,b,x,y):
     grad = np.zeros(2)
-    grad[0] = dg_ab_dx(a,b,x) #dg_ab/dx
-    grad[1] = dg_ab_dy(a,b,y) #dg_ab/dy
+    grad[0] = dg_ab_dx(a,b,x,y) #dg_ab/dx
+    grad[1] = dg_ab_dy(a,b,x,y) #dg_ab/dy
     return grad
 
 def dg_ab_dx(a,b,x,y):
     return (2 * x) / a
 
+def dg_227_dx(x,y):
+    return (2 * x) / 2
+
 def dg_ab_dy(a,b,x,y):
     return(2 * y) / b
+
+def dg_227_dy(x,y):
+    return (2 * y) / (2 / 7)
 
 def grad_h(x,y):
     grad = np.zeros(2)
@@ -277,13 +283,21 @@ for i in tab_2d:
 
 def gradpc(eps, m, u, x0, y0, df1, df2):
     nb_iteration = 0
-    grad = df1(x0,y0) + df2(x0,y0)
-    
-    while(norme_gradient(grad)>eps or nb_iteration < 10000 ):
-        
+    grad = np.zeros(2)
+    grad[0] = df1(x0,y0) 
+    grad[1] = df2(x0,y0)
+    point = [x0 , y0]
+    print(point)
+    print(grad)
+    while(norme_gradient(grad)>eps or nb_iteration < 10 ):
+        for i in range(len(grad)):
+            point[i] = point[i] + u * grad[i]
+        grad[0] = df1(point[0],point[1])  
+        grad[1] = df2(point[0],point[1])
         nb_iteration += 1
+    return point
         
-
+print(gradpc(1,1,1,-1,-1,dg_227_dx,dg_227_dy))
 #-------------------------------- Question 6  ---------------------------------
 
 
