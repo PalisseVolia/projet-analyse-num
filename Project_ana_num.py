@@ -156,6 +156,9 @@ print("C.   Optimisation d'une fonction de deux variables réelles")
 def g_ab(x,y,a,b):
     return (x**2)/a + (y**2)/b
 
+def g_227(x,y):
+    return (x**2)/2 + (y**2)/(2/7)
+
 def h(x,y):
     return np.cos(x) * np.sin(y)
     
@@ -257,7 +260,6 @@ tab_2d = [
     [100 , -26]
 ]
 
-
 print("Calculs du gradient et de sa norme de h(x,y) en quelques points :")
 for i in tab_2d:
     grad = grad_h(i[0],i[1])
@@ -285,9 +287,7 @@ def gradpc(eps, m, u, x0, y0, df1, df2):
     grad[0] = df1(x0,y0) 
     grad[1] = df2(x0,y0)
     point = [x0 , y0]
-    print(point)
-    print(grad)
-    while (norme_gradient(grad)>eps) and (nb_iteration <= 10000) :
+    while (norme_gradient(grad)>eps) and (nb_iteration <= m) :
         for i in range(len(grad)):
             point[i] = point[i] + u * grad[i]
         grad[0] = df1(point[0],point[1])  
@@ -296,35 +296,76 @@ def gradpc(eps, m, u, x0, y0, df1, df2):
     return point
         
 print(gradpc(0.001,1,-0.001,-5,-5,dg_227_dx,dg_227_dy))
-
+print()
 
 #-------------------------------- Question 6  ---------------------------------
 
 print("Question 6")
 
 print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
-print(gradpc(0.001,1,-0.001,0,0,dh_dx,dh_dy))
+print(gradpc(0.001,10000,-0.001,0,0,dh_dx,dh_dy))
 print()
 
 print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
-print(gradpc(0.001,1,-0.001,7,1.5,dg_227_dx,dg_227_dy))
+print(gradpc(0.001,10000,-0.001,7,1.5,dg_227_dx,dg_227_dy))
 print()
-#Le minimum global de g_22/7 est obtenu pour x=0 et y=0 (source : wolfram Alpha)
+#Le minimum global de g_22/7 est obtenu pour le couple (0,0)
 
 #-------------------------------- Question 7  ---------------------------------
 
 
 
 #-------------------------------- Question 8  ---------------------------------
+#marche pas
+def F1(x,y,k,u,func, grad):
+    x1 = x + k * u * grad[0]
+    y1 = y + k * u * grad[1]
+    return func(x1,y1)
+
+def F2(x,y,k,u,func, grad):
+    x1 = x + (k + 1) * u * grad[0]
+    y1 = y + (k + 1) * u * grad[1]
+    return func(x1,y1)
 
 def gradamax(eps, m, u, x0, y0, f, df1, df2):
-    print("a")
+    nb_iteration = 0
+    grad = np.zeros(2)
+    grad[0] = df1(x0,y0) 
+    grad[1] = df2(x0,y0)
+    point = [x0 , y0]
+    k = 0
+    f1 = F1(point[0],point[1],k,u,f,grad)
+    f2 = F2(point[0],point[1],k,u,f,grad)
+    while (norme_gradient(grad)>eps) and (nb_iteration <= m) :
+        while(f1<f2):
+            k+=0.001
+            f1 = F1(point[0],point[1],k,u,f,grad)
+            f2 = F2(point[0],point[1],k,u,f,grad)
+    nb_iteration += 1
+    return point
 
 
 #-------------------------------- Question 9  ---------------------------------
-
+#marche pas
 def gradamin(eps, m, u, x0, y0, f, df1, df2):
-    print("a")
+    nb_iteration = 0
+    grad = np.zeros(2)
+    grad[0] = df1(x0,y0) 
+    grad[1] = df2(x0,y0)
+    point = [x0 , y0]
+    k = 0
+    f1 = F1(point[0],point[1],k,u,f,grad)
+    f2 = F2(point[0],point[1],k,u,f,grad)
+    while (norme_gradient(grad)>eps) and (nb_iteration <= m) :
+        while(f1>f2):
+            k+=1
+            f1 = F1(point[0],point[1],k,u,f,grad)
+            f2 = F2(point[0],point[1],k,u,f,grad)
+            print(f1)
+            print(f2)
+            print()
+    nb_iteration += 1
+    return point
 
 #-------------------------------- Question 10  --------------------------------
 
