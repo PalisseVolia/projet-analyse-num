@@ -218,13 +218,13 @@ def dg_ab_dx(a,b,x,y):
     return (2 * x) / a
 
 def dg_227_dx(x,y):
-    return (2 * x) / 2
+    return x
 
 def dg_ab_dy(a,b,x,y):
     return(2 * y) / b
 
 def dg_227_dy(x,y):
-    return (2 * y) / (2 / 7)
+    return (7 * y) 
 
 def grad_h(x,y):
     grad = np.zeros(2)
@@ -238,11 +238,9 @@ def dh_dx(x,y):
 def dh_dy(x,y):
     return np.cos(x) * np.cos(y)
 
-
-
 def affiche_gradient(tab):
     for i in tab:
-        print("[ "+ str(i) + "]")
+        print("[ "+ str(i) + " ]")
 
 #-------------------------------- Question 4  ---------------------------------
 
@@ -289,7 +287,7 @@ def gradpc(eps, m, u, x0, y0, df1, df2):
     point = [x0 , y0]
     print(point)
     print(grad)
-    while(norme_gradient(grad)>eps or nb_iteration < 10 ):
+    while (norme_gradient(grad)>eps) and (nb_iteration <= 10000) :
         for i in range(len(grad)):
             point[i] = point[i] + u * grad[i]
         grad[0] = df1(point[0],point[1])  
@@ -297,10 +295,21 @@ def gradpc(eps, m, u, x0, y0, df1, df2):
         nb_iteration += 1
     return point
         
-print(gradpc(1,1,1,-1,-1,dg_227_dx,dg_227_dy))
+print(gradpc(0.001,1,-0.001,-5,-5,dg_227_dx,dg_227_dy))
+
+
 #-------------------------------- Question 6  ---------------------------------
 
+print("Question 6")
 
+print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
+print(gradpc(0.001,1,-0.001,0,0,dh_dx,dh_dy))
+print()
+
+print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
+print(gradpc(0.001,1,-0.001,7,1.5,dg_227_dx,dg_227_dy))
+print()
+#Le minimum global de g_22/7 est obtenu pour x=0 et y=0 (source : wolfram Alpha)
 
 #-------------------------------- Question 7  ---------------------------------
 
