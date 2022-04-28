@@ -21,7 +21,6 @@ print()
 
 #-------------------------------- Question 1  ---------------------------------
 
-minbalayconst = []
 def balayage_constant(func,a,b,N):
     dx = (b-a)/N
     ai = a
@@ -32,14 +31,13 @@ def balayage_constant(func,a,b,N):
         for j in (ai,bi):
         #On cherche les minimums dans les sous-intervalles
             if (func(j)<minimum):
-                minbalayconst.append(minimum)
                 minimum=func(j)
         #on modifie les sous-intervalles
         ai=bi
         bi=bi+dx
     return minimum
 
-minbalayalea = []
+
 def balayage_aleatoire(func,a,b,N):
     val = np.zeros(N+1)
     for i in range(len(val)):
@@ -52,7 +50,6 @@ def balayage_aleatoire(func,a,b,N):
     #On cherche la valeur minimum en utilisant les nombres aléatoires comme
     #antécédents de la fonction
         if func(i)<minimum:
-            minbalayalea.append(minimum)
             minimum = func(i)
     return minimum
 
@@ -96,21 +93,20 @@ graph_2D(dfunc,0,3)
 graph_2D(droite,0,3)
 
 plt.close()
+
 #-------------------------------- Question 3  ---------------------------------
 a = 0
 b = 3
-size = max(len(minbalayalea),len(minbalayconst))
+size = 30
 
-errbalayconst = []
 errbalayconst = np.zeros(size)
-for i in range(0,len(minbalayconst)):
-    errbalayconst[i] = abs(minbalayconst[i]-minimum_reel)
-errbalayalea = []
-errbalayalea = np.zeros(size)
-for i in range(0,len(minbalayalea)):
-    errbalayalea[i] = abs(minbalayalea[i]-minimum_reel)
-    
+for i in range(0,size):
+    errbalayconst[i] = abs(balayage_constant(func,a,b,i+1)-minimum_reel)
 
+errbalayalea = np.zeros(size)
+for i in range(0,size):
+    errbalayalea[i] = abs(balayage_aleatoire(func,a,b,i+1)-minimum_reel)
+    
 x = [k for k in range(0,size)]
 plt.plot(x,errbalayconst, color = 'red')
 plt.plot(x,errbalayalea, color = 'blue')
@@ -149,6 +145,7 @@ print()
 #         C.   Optimisation d'une fonction de deux variables réelles
 #------------------------------------------------------------------------------
 
+#%%
 print("C.   Optimisation d'une fonction de deux variables réelles")
 
 #-------------------------------- Question 1  ---------------------------------
@@ -165,8 +162,8 @@ def h(x,y):
 #Graph de g_ab
 def plot_g_ab(a,b):
     plt.ion()
-    x = np.linspace(-100, 100, 100)
-    y = np.linspace(-100, 100, 100)
+    x = np.linspace(-10, 10, 100)
+    y = np.linspace(-10, 10, 100)
     X, Y = np.meshgrid(x, y)
     Z = g_ab(X,Y,a,b)
     
@@ -184,8 +181,8 @@ def plot_g_ab(a,b):
 
 #Graph de h
 def plot_3D(func):
-    x = np.linspace(-100, 100, 100)
-    y = np.linspace(-100, 100, 100)
+    x = np.linspace(-10, 10,200)
+    y = np.linspace(-10, 10, 200)
     X, Y = np.meshgrid(x, y)
     Z = func(X,Y)
     fig2 = plt.figure(figsize = (10,10))
@@ -281,6 +278,8 @@ for i in tab_2d:
 
 #-------------------------------- Question 5  ---------------------------------
 
+print("Question 5")
+
 def gradpc(eps, m, u, x0, y0, df1, df2):
     nb_iteration = 0
     grad = np.zeros(2)
@@ -295,7 +294,7 @@ def gradpc(eps, m, u, x0, y0, df1, df2):
         nb_iteration += 1
     return point
         
-print(gradpc(0.001,1,-0.001,-5,-5,dg_227_dx,dg_227_dy))
+print(gradpc(0.00001,1,-0.001,-5,-5,dg_227_dx,dg_227_dy))
 print()
 
 #-------------------------------- Question 6  ---------------------------------
