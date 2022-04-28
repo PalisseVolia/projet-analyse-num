@@ -311,8 +311,9 @@ def gradpc(eps, m, u, x0, y0, df1, df2):
         grad[1] = df2(point[0],point[1])
         nb_iteration += 1
     return point
-        
-print(gradpc(0.00001,1,-0.001,-5,-5,dg_227_dx,dg_227_dy))
+g = gradpc(0.00001,100,-0.001,-5,-5,dg_227_dx,dg_227_dy)
+print(gradpc(0.00001,100,-0.001,-5,-5,dg_227_dx,dg_227_dy))
+print(g_227(g[0],g[1]))
 print()
 
 #-------------------------------- Question 6  ---------------------------------
@@ -324,7 +325,7 @@ print(gradpc(0.001,10000,-0.001,0,0,dh_dx,dh_dy))
 print()
 
 print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
-print(gradpc(0.001,10000,-0.001,7,1.5,dg_227_dx,dg_227_dy))
+print(gradpc(0.001,10000,-0.0001,7,1.5,dg_227_dx,dg_227_dy))
 print()
 #Le minimum global de g_22/7 est obtenu pour le couple (0,0)
 
