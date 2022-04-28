@@ -6,6 +6,8 @@
 #%%
 
 from turtle import color
+from matplotlib import colors
+from mpl_toolkits import mplot3d
 import numpy as np
 import matplotlib.pyplot as plt
 import math
@@ -173,14 +175,11 @@ def plot_g_ab(a,b):
     fig = plt.figure(figsize = (10,10))
     ax = plt.axes(projection='3d')
     ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
-    cmap='jet', edgecolor='none')
+    cmap='coolwarm', edgecolor='none')
     ax.set_title("g(x,y)_2,2/7", fontsize = 13)
     ax.set_xlabel('x', fontsize = 11)
     ax.set_ylabel('y', fontsize = 11)
     ax.set_zlabel('Z', fontsize = 10)
-    
-   
-
 
 #Graph de h
 def plot_3D(func):
@@ -207,7 +206,26 @@ print()
 #-------------------------------- Question 2  ---------------------------------
 
 print("Question 2")
-#j'ai pas trop compris 
+
+def plot_g_abcontour(a,b):
+    plt.ion()
+    x = np.linspace(-100, 100, 100)
+    y = np.linspace(-100, 100, 100)
+    X, Y = np.meshgrid(x, y)
+    Z = g_ab(X,Y,a,b)
+    
+    fig = plt.figure(figsize = (10,10))
+    ax = plt.axes(projection='3d')
+    ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
+    cmap='jet', edgecolor='none', alpha=0)
+    ax.set_title("contour g(x,y)_2,2/7", fontsize = 13)
+    ax.contour(X, Y, Z, 10, lw=3, colors="k", linestyles="solid")
+    ax.set_xlabel('x', fontsize = 11)
+    ax.set_ylabel('y', fontsize = 11)
+    ax.set_zlabel('Z', fontsize = 10)
+    
+plot_g_abcontour(2,2/7)
+
 
 #-------------------------------- Question 3  ---------------------------------
 
