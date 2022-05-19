@@ -122,6 +122,7 @@ print()
 #-------------------------------- Question 5  ---------------------------------
 
 #Sur papier
+#Si fn est croissante, f' est positive et uf' est donc négatif, Xn+1 est plsu petit que Xn, mm raisonnement pour f décroissante (Xn)n se stabilise donc dans les minimums locaux
 
 #-------------------------------- Question 6  ---------------------------------
 
@@ -321,21 +322,38 @@ for i in tab_2d:
 
 print("Question 5")
 
+#%%
+from turtle import color
+from matplotlib import colors
+from mpl_toolkits import mplot3d
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+import random
+
+X = []
+Y = []
+
 def gradpc(eps, m, u, x0, y0, df1, df2):
+    X = []
+    Y = []
     nb_iteration = 0
     grad = np.zeros(2)
     grad[0] = df1(x0,y0) 
     grad[1] = df2(x0,y0)
     point = [x0 , y0]
-    while (norme_gradient(grad)>eps) and (nb_iteration <= m) :
-        for i in range(len(grad)):
-            point[i] = point[i] + u * grad[i]
-        grad[0] = df1(point[0],point[1])  
+    while (norme_gradient(grad)>eps) and (nb_iteration < m) :
+        X.append(point[0])
+        Y.append(point[1])
+        point = point + u * grad
+        grad[0] = df1(point[0],point[1])
         grad[1] = df2(point[0],point[1])
         nb_iteration += 1
+    plt.plot(X,Y)
     return point
 
-g = gradpc(0.0001,1000,-0.001,-5,-5,dg_227_dx,dg_227_dy)
+
+g = gradpc(0.0001,100,-0.1,-5,-5,dg_227_dx,dg_227_dy)
 print(g)
 print(g_227(g[0],g[1]))
 print()
@@ -344,6 +362,7 @@ print()
 
 print("Question 6")
 
+#%%
 print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
 p = gradpc(0.000001,1000,-0.001,0,0,dh_dx,dh_dy)
 print(p)
@@ -356,7 +375,6 @@ print()
 #Le minimum global de g_22/7 est obtenu pour le couple (0,0)
 
 #-------------------------------- Question 7  ---------------------------------
-
 
 
 #-------------------------------- Question 8  ---------------------------------
