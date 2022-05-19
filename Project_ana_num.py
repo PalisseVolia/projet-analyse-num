@@ -352,7 +352,7 @@ def gradpc(eps, m, u, x0, y0, df1, df2):
     plt.plot(X,Y)
     return point
 
-g = gradpc(0.0001,100,-0.01,-5,-5,dg_227_dx,dg_227_dy)
+g = gradpc(0.0001,100,-0.1,-5,-5,dg_227_dx,dg_227_dy)
 print(g)
 print(g_227(g[0],g[1]))
 print()
