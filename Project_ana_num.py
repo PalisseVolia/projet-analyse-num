@@ -335,7 +335,7 @@ def gradpc(eps, m, u, x0, y0, df1, df2):
         nb_iteration += 1
     return point
 
-g = gradpc(0.0001,1000,-0.001,-5,-5,dg_227_dx,dg_227_dy)
+g = gradpc(0.0001,100,-0.01,-5,-5,dg_227_dx,dg_227_dy)
 print(g)
 print(g_227(g[0],g[1]))
 print()
@@ -345,13 +345,13 @@ print()
 print("Question 6")
 
 print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
-p = gradpc(0.000001,1000,-0.001,0,0,dh_dx,dh_dy)
+p = gradpc(0.000001,100,-0.1,0,0,dh_dx,dh_dy)
 print(p)
 print("h(x,y) = ")
 print(h(p[0],p[1]))
 
 print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
-print(gradpc(0.0001,1000,-0.001,7,1.5,dg_227_dx,dg_227_dy))
+print(gradpc(0.0001,100,-0.1,7,1.5,dg_227_dx,dg_227_dy))
 print()
 #Le minimum global de g_22/7 est obtenu pour le couple (0,0)
 
@@ -360,7 +360,7 @@ print()
 
 
 #-------------------------------- Question 8  ---------------------------------
-
+##%
 print("Question 8")
 def F1(x,y,k,u,func, grad):
     x1 = x + k * u * grad[0]
@@ -378,25 +378,28 @@ def gradamax(eps, m, u, x0, y0, f, df1, df2):
     grad[0] = df1(x0,y0) 
     grad[1] = df2(x0,y0)
     point = [x0 , y0]
+    k = 0
     f1 = F1(point[0],point[1],k,u,f,grad)
     f2 = F2(point[0],point[1],k,u,f,grad)
     while (norme_gradient(grad)>=eps) and (nb_iteration <= m) :
+        k = 0
         while(f1<f2):
-            k+=0.1
+            k+=1
             f1 = F1(point[0],point[1],k,u,f,grad)
             f2 = F2(point[0],point[1],k,u,f,grad)
         for i in range(len(grad)):
-                point[i] = point[i] + u * grad[i]
+                point[i] = point[i] + k * u * grad[i]
         grad[0] = df1(point[0],point[1])  
         grad[1] = df2(point[0],point[1])
         nb_iteration += 1
     return point
 
-"""print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
-p = gradamax(0.000001,10000,-0.001,0,0,h,dh_dx,dh_dy)
+print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
+p = gradamax(0.0001,100,0.1,0,0,h,dh_dx,dh_dy)
 print(p)
 print("h(x,y) = ")
-print(h(p[0],p[1]))"""
+print(h(p[0],p[1]))
+print()
 
 #-------------------------------- Question 9  ---------------------------------
 
@@ -412,53 +415,25 @@ def gradamin(eps, m, u, x0, y0, f, df1, df2):
     f1 = F1(point[0],point[1],k,u,f,grad)
     f2 = F2(point[0],point[1],k,u,f,grad)
     while (norme_gradient(grad)>=eps) and (nb_iteration <= m) :
-        
-        if(f1>f2):
-            k = k+0.1
-            f1 = F1(point[0],point[1],k,u,f,grad)
-            f2 = F2(point[0],point[1],k,u,f,grad)
-        
-        for i in range(len(grad)):
-                point[i] = point[i] + k * grad[i]
-        grad[0] = df1(point[0],point[1])  
-        grad[1] = df2(point[0],point[1])
-        
-        nb_iteration += 1
-    return point
-
-def gradamin2(eps, m, u, x0, y0, f, df1, df2):
-    nb_iteration = 0
-    grad = np.zeros(2)
-    grad[0] = df1(x0,y0) 
-    grad[1] = df2(x0,y0)
-    point = [x0 , y0]
-    k = 0
-    f1 = F1(point[0],point[1],k,u,f,grad)
-    f2 = F2(point[0],point[1],k,u,f,grad)
-    while (norme_gradient(grad)>=eps) and (nb_iteration <= m) :
-    
-        for i in range(len(grad)):
-                point[i] = point[i] + k * grad[i]
-        grad[0] = df1(point[0],point[1])  
-        grad[1] = df2(point[0],point[1])
-        
+        k = 0
         while(f1>f2):
-            k+=0.1
+            k += 1
             f1 = F1(point[0],point[1],k,u,f,grad)
             f2 = F2(point[0],point[1],k,u,f,grad)
-        
-        
+        point = point + k * u * grad
+        grad[0] = df1(point[0],point[1])  
+        grad[1] = df2(point[0],point[1]) 
         nb_iteration += 1
     return point
 
 print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
-p = gradamin(0.001,10000,-0.0001,0,0,h,dh_dx,dh_dy)
+p = gradamin(0.001,10,-0.1,0,0,h,dh_dx,dh_dy)
 print(p)
 print("h(x,y) = ")
 print(h(p[0],p[1]))
 
 print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
-p = gradamin(0.0001,10000,-0.0001,7,1.5,g_227,dg_227_dx,dg_227_dy)
+p = gradamin(0.001,100,-0.001,7,1.5,g_227,dg_227_dx,dg_227_dy)
 print(p)
 print("g(x,y) = ")
 print(g_227(p[0],p[1]))
