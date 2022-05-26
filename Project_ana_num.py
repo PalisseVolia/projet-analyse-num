@@ -262,11 +262,11 @@ def dg_ab_dx(a,b,x,y):
 def dg_227_dx(x,y):
     return x
 
-def dg_ab_dy(a,b,x,y):
-    return(2 * y) / b
-
 def dg_227_dy(x,y):
-    return (7 * y) 
+    return 7 * y 
+
+def dg_ab_dy(a,b,x,y):
+    return(2 * y) / b 
 
 def grad_h(x,y):
     grad = np.zeros(2)
@@ -299,23 +299,24 @@ tab_2d = [
     [100 , -26]
 ]
 
-print("Calculs du gradient et de sa norme de h(x,y) en quelques points :")
-for i in tab_2d:
-    grad = grad_h(i[0],i[1])
-    print("x = ", str(i[0]) + "; y = "+ str(i[1]))
-    print("gradient = ")
-    affiche_gradient(grad)
-    print("Sa norme est  : " + str(norme_gradient(grad)))
-    print()
-    
-print("Calculs du gradient et de sa norme de g_2,2/7(x,y) en quelques points :")
-for i in tab_2d:
-    grad = grad_g_ab(2,2/7,i[0],i[1])
-    print("x = ", str(i[0]) + "; y = "+ str(i[1]))
-    print("gradient = ")
-    affiche_gradient(grad)
-    print("Sa norme est  : " + str(norme_gradient(grad)))
-    print()
+def q6():
+    print("Calculs du gradient et de sa norme de h(x,y) en quelques points :")
+    for i in tab_2d:
+        grad = grad_h(i[0],i[1])
+        print("x = ", str(i[0]) + "; y = "+ str(i[1]))
+        print("gradient = ")
+        affiche_gradient(grad)
+        print("Sa norme est  : " + str(norme_gradient(grad)))
+        print()
+        
+    print("Calculs du gradient et de sa norme de g_2,2/7(x,y) en quelques points :")
+    for i in tab_2d:
+        grad = grad_g_ab(2,2/7,i[0],i[1])
+        print("x = ", str(i[0]) + "; y = "+ str(i[1]))
+        print("gradient = ")
+        affiche_gradient(grad)
+        print("Sa norme est  : " + str(norme_gradient(grad)))
+        print()
         
 
 #-------------------------------- Question 5  ---------------------------------
@@ -366,7 +367,7 @@ print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
 p = gradpc(0.000001,100,-0.1,0,0,dh_dx,dh_dy)
 print(p)
 print("h(x,y) = ")
-print(h(p[0],p[1]))
+print( h(p[0],p[1]) )
 
 print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
 print(gradpc(0.0001,100,-0.1,7,1.5,dg_227_dx,dg_227_dy))
@@ -411,13 +412,14 @@ def gradamax(eps, m, u, x0, y0, f, df1, df2):
         nb_iteration += 1
     return point
 
+"""
 print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
 p = gradamax(0.0001,100,0.1,0,0,h,dh_dx,dh_dy)
 print(p)
 print("h(x,y) = ")
 print(h(p[0],p[1]))
 print()
-
+"""
 #-------------------------------- Question 9  ---------------------------------
 
 print("Question 9")
@@ -428,10 +430,10 @@ def gradamin(eps, m, u, x0, y0, f, df1, df2):
     grad[0] = df1(x0,y0) 
     grad[1] = df2(x0,y0)
     point = [x0 , y0]
-    k = 0
+    k=0
     f1 = F1(point[0],point[1],k,u,f,grad)
     f2 = F2(point[0],point[1],k,u,f,grad)
-    while (norme_gradient(grad)>=eps) and (nb_iteration <= m) :
+    while (norme_gradient(grad)>eps) and (nb_iteration <= m) :
         k = 0
         while(f1>f2):
             k += 1
@@ -444,17 +446,32 @@ def gradamin(eps, m, u, x0, y0, f, df1, df2):
     return point
 
 print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
-p = gradamin(0.001,10,-0.1,0,0,h,dh_dx,dh_dy)
+p = gradamin(0.1,50,-0.01,7,9,h,dh_dx,dh_dy)
 print(p)
 print("h(x,y) = ")
 print(h(p[0],p[1]))
 
 print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
-p = gradamin(0.001,100,-0.001,7,1.5,g_227,dg_227_dx,dg_227_dy)
+p =gradamin(0.0001,100,-0.1,7,1.5,g_227,dg_227_dx,dg_227_dy)
 print(p)
+print()
 print("g(x,y) = ")
 print(g_227(p[0],p[1]))
 print()
+
+"""def ft(x,y):
+    return x**2 + y**2
+
+def dft_dx(x,y):
+    return 2*x
+
+def dft_dy(x,y):
+    return 2*y
+
+
+print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
+p = gradamin(0.1,50,-0.1,7,1.5,ft,dft_dx,dft_dy)
+print(p)"""
 
 #-------------------------------- Question 10  --------------------------------
 
@@ -469,7 +486,7 @@ print()
 #-------------------------------- Question 2  ---------------------------------
 
 def G(y,A,b):
-    return 2(A*y-b)
+    return 2*(A*y-b)
 
 def grad_pas_opti(y0, A, b):
     pass
