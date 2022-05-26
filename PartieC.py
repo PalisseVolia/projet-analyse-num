@@ -1,10 +1,3 @@
-#------------------------------------------------------------------------------
-#        
-#                        Projet d'analyse numérique
-#
-#------------------------------------------------------------------------------
-#%%
-
 from turtle import color
 from matplotlib import colors
 from mpl_toolkits import mplot3d
@@ -12,150 +5,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import random
-
-
-#------------------------------------------------------------------------------
-#         B.   Optimisation d'une fonction d'une variable réelle
-#------------------------------------------------------------------------------
-
-print("B.   Optimisation d'une fonction d'une variable réelle")
-print()
-
-#-------------------------------- Question 1  ---------------------------------
-
-def balayage_constant(func,a,b,N):
-    dx = (b-a)/N
-    ai = a
-    bi = a+dx
-    minimum = func(a)
-    for i in range(N):
-    #Pour les N intervalles
-        for j in (ai,bi):
-        #On cherche les minimums dans les sous-intervalles
-            if (func(j)<minimum):
-                minimum=func(j)
-        #on modifie les sous-intervalles
-        ai=bi
-        bi=bi+dx
-    return minimum
-
-
-def balayage_aleatoire(func,a,b,N):
-    val = np.zeros(N+1)
-    for i in range(len(val)):
-    #On remplit un tableau de valeurs aléatoires
-        r=random.uniform(a,b) #random.uniform permet de renvoyer des floats
-        #aléatoires
-        val[i]=r
-    minimum = func(val[0])
-    for i in val:
-    #On cherche la valeur minimum en utilisant les nombres aléatoires comme
-    #antécédents de la fonction
-        if func(i)<minimum:
-            minimum = func(i)
-    return minimum
-
-#-------------------------------- Question 2  ---------------------------------
-
-def func(x):
-    return x**3 - 3*x**2 + 2*x + 5
-
-def dfunc(x):
-#Dérivée de f(x)
-    return 3*x**2 - 6*x + 2
-
-def droite(x):
-    return 0
-
-def graph_2D(func,a,b):
-#Graph de la fonction
-    x = [k for k in np.arange(a,b,0.001)]
-    result = []
-    for i in np.arange(a,b,0.001):
-        result.append(func(i))
-    plt.plot(x,result)
-    
-minimum_reel = 4.615099820540249
-#= 5 - 2 / (3 * sqrt(3))
-
-print("Question 2 ") 
-
-print("La valeur réelle minimum = ")
-print(minimum_reel)
-
-print("Par balayage constant, on obtient minimum = ")
-print(balayage_constant(func, 0, 3,1000))
-
-print("Par balayage aléatoire, on obtient minimum = ")
-print(balayage_aleatoire(func, 0, 3,1000))
-print()
-
-graph_2D(func,0,3)
-graph_2D(dfunc,0,3)
-graph_2D(droite,0,3)
-
-plt.close()
-
-#-------------------------------- Question 3  ---------------------------------
-a = 0
-b = 3
-size = 30
-
-errbalayconst = np.zeros(size)
-for i in range(0,size):
-    errbalayconst[i] = abs(balayage_constant(func,a,b,i+1)-minimum_reel)
-
-errbalayalea = np.zeros(size)
-for i in range(0,size):
-    errbalayalea[i] = abs(balayage_aleatoire(func,a,b,i+1)-minimum_reel)
-    
-x = [k for k in range(0,size)]
-plt.plot(x,errbalayconst, color = 'red')
-plt.plot(x,errbalayalea, color = 'blue')
-
-#-------------------------------- Question 4  ---------------------------------
-
-print("Question 4 ")
-print("Par balayage constant, on obtient minimum = ")
-print(balayage_constant(func, 0, 3,10000))
-print()
-#-------------------------------- Question 5  ---------------------------------
-
-#Sur papier
-#Si fn est croissante, f' est positive et uf' est donc négatif, Xn+1 est plsu petit que Xn, mm raisonnement pour f décroissante (Xn)n se stabilise donc dans les minimums locaux
-
-#-------------------------------- Question 6  ---------------------------------
-
-def gradient_1D(func,dfunc,a,b,u,n):
-    x0 = b
-    xn = x0
-    for i in range(1,n):
-        xn = xn + u * dfunc(xn)
-    minimum = func(xn) 
-    return minimum
-
-print("Question 6 ")
-print("Par gradient 1D, on obtient minimum = ")
-print(gradient_1D(func, dfunc, 0, 3, -0.0001, 10000))
-print()
-
-
-#-------------------------------- Question 7  ---------------------------------
-
-#Sur papier
 
 #------------------------------------------------------------------------------
 #         C.   Optimisation d'une fonction de deux variables réelles
 #------------------------------------------------------------------------------
-
-#%%
-from turtle import color
-from matplotlib import colors
-from mpl_toolkits import mplot3d
-import numpy as np
-import matplotlib.pyplot as plt
-import math
-import random
 
 print("C.   Optimisation d'une fonction de deux variables réelles")
 
@@ -300,10 +153,10 @@ def norme_gradient(tab):
 
 tab_2d = [
     [  0 ,  0 ],
-    [ 7 ,  1.5],
-    [ 10 , 10 ],
-    [-10 , -10],
-    [-54 , 20 ],
+    #[ 7 ,  1.5],
+    #[ 10 , 10 ],
+    #[-10 , -10],
+    #[-54 , 20 ],
     [42  , 58 ],
     [100 , -26]
 ]
@@ -354,7 +207,7 @@ def gradpc(eps, m, u, x0, y0, df1, df2):
     return point
 
 
-g = gradpc(0.0001,100,-0.1,-5,-5,dg_227_dx,dg_227_dy)
+g = gradpc(0.0001,100,-0.1,0,0,dg_227_dx,dg_227_dy)
 print(g)
 print(g_227(g[0],g[1]))
 print()
@@ -363,9 +216,8 @@ print()
 
 print("Question 6")
 
-#%%
 print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
-p = gradpc(0.000001,1000,-0.0001,0,0,dh_dx,dh_dy)
+p = gradpc(0.0001,1000,-0.1,0,0,dh_dx,dh_dy)
 print(p)
 print("h(x,y) = ")
 print( h(p[0],p[1]) )
@@ -391,7 +243,7 @@ def F2(x,y,k,u,func, grad):
     y1 = y + (k + 1) * u * grad[1]
     return func(x1,y1)
 
-def gradamax(eps, m, u, x0, y0, f, df1, df2):
+def gradamax2(eps, m, u, x0, y0, f, df1, df2):
     nb_iteration = 0
     grad = np.zeros(2)
     grad[0] = df1(x0,y0) 
@@ -411,11 +263,34 @@ def gradamax(eps, m, u, x0, y0, f, df1, df2):
         nb_iteration += 1
     return point
 
-"""print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
-p = gradamax(0.000001,10000,-0.001,0,0,h,dh_dx,dh_dy)
+def gradamax(eps, m, u, x0, y0, f, df1, df2):
+    nb_iteration = 0
+    grad = np.zeros(2)
+    grad[0] = df1(x0,y0) 
+    grad[1] = df2(x0,y0)
+    point = [x0 , y0]
+    k=0
+    f1 = F1(point[0],point[1],k,u,f,grad)
+    f2 = F2(point[0],point[1],k,u,f,grad)
+    while (norme_gradient(grad)>eps) and (nb_iteration <= m) :
+        k = 0
+        while(f1<f2):
+            k += 1
+            f1 = F1(point[0],point[1],k,u,f,grad)
+            f2 = F2(point[0],point[1],k,u,f,grad)
+        
+        point = point + k * u * grad
+        grad[0] = df1(point[0],point[1])  
+        grad[1] = df2(point[0],point[1])
+        
+        nb_iteration += 1
+    return point
+
+print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
+p = gradamax(0.01,100,0.01,0,0,h,dh_dx,dh_dy)
 print(p)
 print("h(x,y) = ")
-print(h(p[0],p[1]))"""
+print(h(p[0],p[1]))
 
 #-------------------------------- Question 9  ---------------------------------
 
@@ -432,13 +307,13 @@ def gradamin(eps, m, u, x0, y0, f, df1, df2):
     f2 = F2(point[0],point[1],k,u,f,grad)
     while (norme_gradient(grad)>eps) and (nb_iteration <= m) :
         k = 0
-        
+        print(point)
         while(f1>f2):
             k += 1
             f1 = F1(point[0],point[1],k,u,f,grad)
             f2 = F2(point[0],point[1],k,u,f,grad)
         
-        point = point+ k * grad
+        point = point + k * u * grad
         grad[0] = df1(point[0],point[1])  
         grad[1] = df2(point[0],point[1])
         
@@ -467,16 +342,17 @@ def gradamin2(eps, m, u, x0, y0, f, df1, df2):
             f2 = F2(point[0],point[1],k,u,f,grad)
             
         nb_iteration += 1
+        
     return point
 
 print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
-p = gradamin(0.001,10,-0.01,0,0,h,dh_dx,dh_dy)
+p = gradamin(0.01,10,-0.1,0,0,h,dh_dx,dh_dy)
 print(p)
 print("h(x,y) = ")
 print(h(p[0],p[1]))
 
 print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
-p =gradamin(0.0001,100,-0.1,7,1.5,g_227,dg_227_dx,dg_227_dy)
+#p =gradamin(0.0001,1000,-10,7,1.5,g_227,dg_227_dx,dg_227_dy)
 print(p)
 print()
 print("g(x,y) = ")
@@ -496,40 +372,4 @@ def dft_dy(x,y):
 print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
 p = gradamin(0.1,50,-0.1,7,1.5,ft,dft_dx,dft_dy)
 print(p)"""
-
-#-------------------------------- Question 10  --------------------------------
-
-#------------------------------------------------------------------------------
-#         D.   Calcul de l'inverse d'une matrice
-#------------------------------------------------------------------------------
-
-#-------------------------------- Question 1  ---------------------------------
-
-
-
-#-------------------------------- Question 2  ---------------------------------
-
-def G(y,A,b):
-    return 2*(A*y-b)
-
-def grad_pas_opti(y0, A, b):
-    pass
-
-#-------------------------------- Question 3  ---------------------------------
-
-
-
-#------------------------------------------------------------------------------
-#         E.   Application à des problèmes de transfert de chaleur
-#------------------------------------------------------------------------------
-
-#-------------------------------- Question 1  ---------------------------------
-
-
-
-#-------------------------------- Question 2  ---------------------------------
-
-
-
-
 # %%
