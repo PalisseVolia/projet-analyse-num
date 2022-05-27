@@ -1,3 +1,5 @@
+#%%
+
 from turtle import color
 from matplotlib import colors
 from mpl_toolkits import mplot3d
@@ -13,6 +15,7 @@ import random
 print("C.   Optimisation d'une fonction de deux variables réelles")
 
 #-------------------------------- Question 1  ---------------------------------
+print("Question 1")
 
 def g_ab(x,y,a,b):
     return (x**2)/a + (y**2)/b
@@ -24,7 +27,7 @@ def h(x,y):
     return np.cos(x) * np.sin(y)
     
 #Graph de g_ab
-def plot_g_ab(a,b):
+def plot_3D_gab(a,b):
     plt.ion()
     x = np.linspace(-10, 10, 100)
     y = np.linspace(-10, 10, 100)
@@ -40,7 +43,7 @@ def plot_g_ab(a,b):
     ax.set_ylabel('y', fontsize = 11)
     ax.set_zlabel('Z', fontsize = 10)
 
-#Graph de h
+#Graph d'une fonction (ici h)
 def plot_3D(func):
     x = np.linspace(-10, 10,200)
     y = np.linspace(-10, 10, 200)
@@ -55,35 +58,31 @@ def plot_3D(func):
     ax.set_ylabel('y', fontsize = 11)
     ax.set_zlabel('Z', fontsize = 10)
     
-print("Question 1")
-plot_g_ab(2,2/7)
+plot_3D_gab(2,2/7)
 plot_3D(h)
 print()
-
-
 
 #-------------------------------- Question 2  ---------------------------------
 
 print("Question 2")
 
-def plot_g_abcontour(a,b):
+def plot_3D_LN_gab(a,b):
     plt.ion()
     x = np.linspace(-100, 100, 100)
     y = np.linspace(-100, 100, 100)
     X, Y = np.meshgrid(x, y)
     Z = g_ab(X,Y,a,b)
-    
     fig = plt.figure(figsize = (10,10))
     ax = plt.axes(projection='3d')
     ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
     cmap='jet', edgecolor='none', alpha=0)
     ax.set_title("contour g(x,y)_2,2/7", fontsize = 13)
-    ax.contour(X, Y, Z, 20, lw=3, colors="k", linestyles="solid")
+    ax.contour(X, Y, Z, 20, colors="k", linestyles="solid")
     ax.set_xlabel('x', fontsize = 11)
     ax.set_ylabel('y', fontsize = 11)
     ax.set_zlabel('Z', fontsize = 10)
     
-def plot_3Dcontour(func):
+def plot_3D_LN(func):
     x = np.linspace(-10, 10,200)
     y = np.linspace(-10, 10, 200)
     X, Y = np.meshgrid(x, y)
@@ -93,23 +92,37 @@ def plot_3Dcontour(func):
     ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
     cmap='coolwarm', edgecolor='none', alpha=0)
     ax.set_title("contour h(x,y)", fontsize = 13)
-    ax.contour(X, Y, Z, 20, lw=3, colors="k", linestyles="solid")
+    ax.contour(X, Y, Z, 20, colors="k", linestyles="solid")
     ax.set_xlabel('x', fontsize = 11)
     ax.set_ylabel('y', fontsize = 11)
     ax.set_zlabel('Z', fontsize = 10)    
 
-def plot_g_abcontour2D(a,b):
-    g=np.vectorize(g)
-    X = np.arange(-100, 100, 1)
-    Y = np.arange(-100, 100, 1)
+def plot_2D_LN(func):
+    f = np.vectorize(func)
+    X = np.arange(-10, 10, 0.01)
+    Y = np.arange(-10, 10, 0.01)
+    X, Y = np.meshgrid(X, Y)
+    Z = f(X, Y)
+    fig3 = plt.figure(figsize = (10,10))
+    plt.axis('equal')
+    plt.contour(X, Y, Z, 15)
+    plt.show()
+
+def plot_2D_LN_gab(a,b):
+    X = np.arange(-10, 10, 0.01)
+    Y = np.arange(-10, 10, 0.01)
     X, Y = np.meshgrid(X, Y)
     Z = g_ab(X, Y, a, b)
+    fig4 = plt.figure(figsize = (10,10))
     plt.axis('equal')
-    plt.contour(X, Y, Z, 20, lw=3, colors="k", linestyles="solid")
+    plt.contour(X, Y, Z, 15)
     plt.show()
-plot_g_abcontour(2,2/7)
-plot_3Dcontour(h)
 
+plot_3D_LN_gab(2,2/7)
+plot_3D_LN(h)
+plot_2D_LN_gab(2,2/7)
+plot_2D_LN(h)
+#%%
 #-------------------------------- Question 3  ---------------------------------
 
 def grad_g_ab(a,b,x,y):
