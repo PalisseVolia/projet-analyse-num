@@ -15,7 +15,7 @@ print("B.   Optimisation d'une fonction d'une variable réelle")
 print()
 
 #-------------------------------- Question 1  ---------------------------------
-
+N = 25
 def balayage_constant(func,a,b,N):
     dx = (b-a)/N
     ai = a
@@ -77,10 +77,10 @@ print("La valeur réelle minimum = ")
 print(minimum_reel)
 
 print("Par balayage constant, on obtient minimum = ")
-print(balayage_constant(func, 0, 3,100))
+print(balayage_constant(func, 0, 3,N))
 
 print("Par balayage aléatoire, on obtient minimum = ")
-print(balayage_aleatoire(func, 0, 3,100))
+print(balayage_aleatoire(func, 0, 3,N))
 print()
 
 #graph_2D(func,0,3)
@@ -88,23 +88,8 @@ print()
 #graph_2D(droite,0,3)
 
 #-------------------------------- Question 3  ---------------------------------
-a = 0
-b = 3
-size = 30
 
-errbalayconst = np.zeros(size)
-for i in range(0,size):
-    errbalayconst[i] = abs(balayage_constant(func,a,b,i+1)-minimum_reel)
-
-errbalayalea = np.zeros(size)
-for i in range(0,size):
-    errbalayalea[i] = abs(balayage_aleatoire(func,a,b,i+1)-minimum_reel)
-    
-x = [k for k in range(0,size)]
-plt.plot(x,errbalayconst, color = 'red')
-plt.plot(x,errbalayalea, color = 'blue')
-plt.legend(["Balayage constant","Balayage aléatoire"])
-
+#voir en bas du code
 #-------------------------------- Question 4  ---------------------------------
 def balayage_constant_max(func,a,b,N):
     dx = (b-a)/N
@@ -124,7 +109,7 @@ def balayage_constant_max(func,a,b,N):
 
 print("Question 4 ")
 print("Par balayage constant, on obtient maximum = ")
-print(balayage_constant_max(func, 0, 3,100))
+print(balayage_constant_max(func, 0, 3,10))
 print()
 #-------------------------------- Question 5  ---------------------------------
 
@@ -142,10 +127,30 @@ def gradient_1D(func,dfunc,xn,u,n):
 
 print("Question 6 ")
 print("Par gradient 1D, on obtient minimum = ")
-print(gradient_1D(func, dfunc, 0.5, -0.1, 100))
+print(gradient_1D(func, dfunc, 0.5, -0.001, N))
 print()
 
+a = 0
+b = 3
+size = 30
 
+errbalayconst = np.zeros(size)
+for i in range(0,size):
+    errbalayconst[i] = abs(balayage_constant(func,a,b,i+1)-minimum_reel)
+
+errbalayalea = np.zeros(size)
+for i in range(0,size):
+    errbalayalea[i] = abs(balayage_aleatoire(func,a,b,i+1)-minimum_reel)
+
+errgrad1D = np.zeros(size)
+for i in range(0,size):
+    errgrad1D[i] = abs(gradient_1D(func,dfunc,1,-0.5,i+1)-minimum_reel)
+    
+x = [k for k in range(0,size)]
+plt.plot(x,errbalayconst, color = 'red')
+plt.plot(x,errbalayalea, color = 'blue')
+plt.plot(x,errgrad1D)
+plt.legend(["Balayage constant","Balayage aléatoire","Gradient 1D"])
 #-------------------------------- Question 7  ---------------------------------
 
 #Sur papier

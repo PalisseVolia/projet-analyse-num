@@ -23,6 +23,9 @@ def g_ab(x,y,a,b):
 def g_227(x,y):
     return (x**2)/2 + (y**2)/(2/7)
 
+def g_120(x,y):
+    return (x**2)/1 + (y**2)/20
+
 def h(x,y):
     return np.cos(x) * np.sin(y)
     
@@ -58,8 +61,8 @@ def plot_3D(func):
     ax.set_ylabel('y', fontsize = 11)
     ax.set_zlabel('Z', fontsize = 10)
     
-plot_3D_gab(2,2/7)
-plot_3D(h)
+#plot_3D_gab(2,2/7)
+#plot_3D(h)
 print()
 
 #-------------------------------- Question 2  ---------------------------------
@@ -118,11 +121,10 @@ def plot_2D_LN_gab(a,b):
     plt.contour(X, Y, Z, 15)
     plt.show()
 
-plot_3D_LN_gab(2,2/7)
-plot_3D_LN(h)
-plot_2D_LN_gab(2,2/7)
-plot_2D_LN(h)
-#%%
+#plot_3D_LN_gab(2,2/7)
+#plot_3D_LN(h)
+#plot_2D_LN_gab(2,2/7)
+#plot_2D_LN(h)
 #-------------------------------- Question 3  ---------------------------------
 
 def grad_g_ab(a,b,x,y):
@@ -139,6 +141,7 @@ def dg_227_dx(x,y):
 
 def dg_227_dy(x,y):
     return 7 * y 
+
 
 def dg_ab_dy(a,b,x,y):
     return(2 * y) / b 
@@ -166,10 +169,10 @@ def norme_gradient(tab):
 
 tab_2d = [
     [  0 ,  0 ],
-    #[ 7 ,  1.5],
-    #[ 10 , 10 ],
-    #[-10 , -10],
-    #[-54 , 20 ],
+    [ 7 ,  1.5],
+    [ 10 , 10 ],
+    [-10 , -10],
+    [-54 , 20 ],
     [42  , 58 ],
     [100 , -26]
 ]
@@ -201,7 +204,7 @@ print("Question 5")
 X = []
 Y = []
 
-def gradpc(eps, m, u, x0, y0, df1, df2):
+def gradpc(eps, m, u, x0, y0, df1, df2,s):
     X = []
     Y = []
     nb_iteration = 0
@@ -217,32 +220,42 @@ def gradpc(eps, m, u, x0, y0, df1, df2):
         grad[1] = df2(point[0],point[1])
         nb_iteration += 1
     plt.plot(X,Y)
+    plt.legend([s])
     return point
 
 
-g = gradpc(0.0001,100,-0.1,0,0,dg_227_dx,dg_227_dy)
+"""g = gradpc(0.001,100,-0.1,0,0,dg_227_dx,dg_227_dy, "g_2,2/7")
 print(g)
 print(g_227(g[0],g[1]))
 print()
-
+plt.close"""
 #-------------------------------- Question 6  ---------------------------------
-
+N = 100
 print("Question 6")
 
 print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
-p = gradpc(0.0001,1000,-0.1,0,0,dh_dx,dh_dy)
+p = gradpc(0.0001,100,-0.1,0,0,dh_dx,dh_dy,"h(x,y)")
 print(p)
 print("h(x,y) = ")
 print( h(p[0],p[1]) )
 
-print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
-print(gradpc(0.0001,1000,-0.01,7,1.5,dg_227_dx,dg_227_dy))
-print()
+"""print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
+p = gradpc(0.0001,100,-0.01,7,1.5,dg_227_dx,dg_227_dy,"g_2,2/7")
+print(p)
+print(g_227(p[0],p[1]))"""
 #Le minimum global de g_22/7 est obtenu pour le couple (0,0)
 
 #-------------------------------- Question 7  ---------------------------------
 
+def dg_120_dx(x,y):
+    return 2*x
 
+def dg_120_dy(x,y):
+    return 2*y/10
+
+def g_120(x,y):
+    return (x**2)/1 + (y**2)/20
+#%%
 #-------------------------------- Question 8  ---------------------------------
 
 print("Question 8")
@@ -288,7 +301,7 @@ def gradamax(eps, m, u, x0, y0, f, df1, df2):
     while (norme_gradient(grad)>eps) and (nb_iteration <= m) :
         k = 0
         while(f1<f2):
-            k += 1
+            k =k+0.1
             f1 = F1(point[0],point[1],k,u,f,grad)
             f2 = F2(point[0],point[1],k,u,f,grad)
         
