@@ -320,7 +320,7 @@ print(h(p[0],p[1]))
 
 # Ne converge pas, par conséquent on éxécute pas ces lignes :
 
-# print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
+# print("Pour g_2,2/7(x,y) avec x0 = 0 et y0 = 0 :")
 # p = gradamax(0.001,100,0.1,7,1.5,g_227,dg_227_dx,dg_227_dy,"g_2,2/7")
 # print(p)
 # print("g_2,2/7(x,y) = ")
