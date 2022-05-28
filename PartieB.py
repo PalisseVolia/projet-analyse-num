@@ -32,7 +32,6 @@ def balayage_constant(func,a,b,N):
         bi=bi+dx
     return minimum
 
-
 def balayage_aleatoire(func,a,b,N):
     val = np.zeros(N+1)
     for i in range(len(val)):
@@ -176,6 +175,9 @@ plt.plot(x,errbalayconst, color = 'red')
 plt.plot(x,errbalayalea, color = 'blue')
 plt.plot(x,errgrad1D, color = "green")
 plt.plot(x,errgrad1D_am, color = 'yellow')
+plt.title("Erreur en fonction du nombre d'itérations")
+plt.xlabel("Nombre d'itérations")
+plt.ylabel("Erreur")
 plt.legend(["Balayage constant","Balayage aléatoire","Gradient 1D","Gradient amélioré"])
 
 # %%
