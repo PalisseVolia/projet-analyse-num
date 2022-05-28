@@ -217,6 +217,7 @@ def gradpc(eps, m, u, x0, y0, df1, df2,s):
         grad[0] = df1(point[0],point[1])
         grad[1] = df2(point[0],point[1])
         nb_iteration += 1
+    fig5 = plt.figure(figsize = (15,10))
     plt.plot(X,Y)
     plt.legend([s])
     return point
@@ -234,26 +235,25 @@ def gradpc2(eps, m, u, x0, y0,f, df1, df2):
         nb_iteration += 1
     return f(point[0],point[1])
 
+# g = gradpc(0.001,100,-0.1,0,0,dg_227_dx,dg_227_dy, "g_2,2/7")
+# print(g)
+# print(g_227(g[0],g[1]))
+# print()
 
-"""g = gradpc(0.001,100,-0.1,0,0,dg_227_dx,dg_227_dy, "g_2,2/7")
-print(g)
-print(g_227(g[0],g[1]))
-print()
-plt.close"""
 #-------------------------------- Question 6  ---------------------------------
 N = 100
 print("Question 6")
 
-"""print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
+print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
 p = gradpc(0.0001,100,-0.1,0,0,dh_dx,dh_dy,"h(x,y)")
 print(p)
 print("h(x,y) = ")
-print( h(p[0],p[1]) )"""
+print( h(p[0],p[1]) )
 
-"""print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
+print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
 p = gradpc(0.0001,100,-0.1,7,1.5,dg_227_dx,dg_227_dy,"g_2,2/7")
 print(p)
-print(g_227(p[0],p[1]))"""
+print(g_227(p[0],p[1]))
 #Le minimum global de g_22/7 est obtenu pour le couple (0,0)
 
 #-------------------------------- Question 7  ---------------------------------
@@ -307,23 +307,24 @@ def gradamax(eps, m, u, x0, y0, f, df1, df2,s):
         grad[0] = df1(point[0],point[1])  
         grad[1] = df2(point[0],point[1])
         nb_iteration += 1
+        fig6 = plt.figure(figsize = (15,10))
         plt.plot(X,Y, color = 'blue')
         plt.legend([s])
     return point
-
-        
     
 print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
-p = gradamax(0.001,100,0.1,0,0,h,dh_dx,dh_dy,"h(x,y)")
+p = gradamax(0.001,100,0.1,2,0,h,dh_dx,dh_dy,"h(x,y)")
 print(p)
 print("h(x,y) = ")
 print(h(p[0],p[1]))
 
-"""print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
-p = gradamax(0.001,100,0.1,7,1.5,g_227,dg_227_dx,dg_227_dy)
-print(p)
-print("h(x,y) = ")
-print(h(p[0],p[1]))"""
+# Ne converge pas, par conséquent on éxécute pas ces lignes :
+
+# print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
+# p = gradamax(0.001,100,0.1,7,1.5,g_227,dg_227_dx,dg_227_dy,"g_2,2/7")
+# print(p)
+# print("g_2,2/7(x,y) = ")
+# print(g_227(p[0],p[1]))
 
 #-------------------------------- Question 9  ---------------------------------
 
@@ -334,6 +335,8 @@ Y = []
 
 def gradamin(eps, m, u, x0, y0, f, df1, df2,s):
     nb_iteration = 0
+    X = []
+    Y = []
     grad = np.zeros(2)
     grad[0] = df1(x0,y0) 
     grad[1] = df2(x0,y0)
@@ -357,6 +360,7 @@ def gradamin(eps, m, u, x0, y0, f, df1, df2,s):
         grad[1] = df2(point[0],point[1])
         
         nb_iteration += 1
+    fig7 = plt.figure(figsize = (15,10))
     plt.plot(X,Y, color = 'blue')
     plt.legend([s])
     return point
@@ -386,33 +390,34 @@ def gradamin2(eps, m, u, x0, y0, f, df1, df2):
         nb_iteration += 1
     return f(point[0],point[1])
 
-"""print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
+print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
 p = gradamin(0.01,10,-0.1,0,0,h,dh_dx,dh_dy, "h(x,y)")
 print(p)
+print()
 print("h(x,y) = ")
-print(h(p[0],p[1]))"""
+print(h(p[0],p[1]))
+print()
 
-"""print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
-p =gradamin(0.0001,100,-0.1,7,1.5,g_227,dg_227_dx,dg_227_dy,"g_2;2/7")
+print("Pour g227(x,y) avec x0 = 7 et y0 = 1.5 :")
+p = gradamin(0.0001,100,-0.1,7,1.5,g_227,dg_227_dx,dg_227_dy,"g_2;2/7")
 print(p)
 print()
-print("g(x,y) = ")
+print("g_2,2/7(x,y) = ")
 print(g_227(p[0],p[1]))
-print()"""
+print()
 
+size = 30
+errgradameliore = np.zeros(size)
+for i in range(0,size):
+    errgradameliore[i] = abs(gradamin2(0.0001,i+1,-0.1,7,1.5,g_227,dg_227_dx,dg_227_dy))
 
-def graph_comparaison():
-    size = 30
-    errgradameliore = np.zeros(size)
-    for i in range(0,size):
-        errgradameliore[i] = abs(gradamin2(0.0001,i+1,-0.1,7,1.5,g_227,dg_227_dx,dg_227_dy))
+errgrad = np.zeros(size)
+for i in range(0,size):
+    errgrad[i] = abs(gradpc2(0.0001,i+1,-0.1,7,1.5,g_227,dg_227_dx,dg_227_dy))
 
-    errgrad = np.zeros(size)
-    for i in range(0,size):
-        errgrad[i] = abs(gradpc2(0.0001,i+1,-0.1,7,1.5,g_227,dg_227_dx,dg_227_dy))
-
-    x = [k for k in range(0,size)]
-    plt.plot(x,errgradameliore, color = 'red')
-    plt.plot(x,errgrad, color = 'blue')
-    plt.legend(["Gradient amélioré","Gradient"])
+x = [k for k in range(0,size)]
+fig8 = plt.figure(figsize = (15,10))
+plt.plot(x,errgradameliore, color = 'red')
+plt.plot(x,errgrad, color = 'blue')
+plt.legend(["Gradient amélioré","Gradient"])
 # %%
