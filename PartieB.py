@@ -15,7 +15,7 @@ print("B.   Optimisation d'une fonction d'une variable réelle")
 print()
 
 #-------------------------------- Question 1  ---------------------------------
-N = 25
+N = 100
 def balayage_constant(func,a,b,N):
     dx = (b-a)/N
     ai = a
@@ -127,8 +127,29 @@ def gradient_1D(func,dfunc,xn,u,n):
 
 print("Question 6 ")
 print("Par gradient 1D, on obtient minimum = ")
-print(gradient_1D(func, dfunc, 0.5, -0.001, N))
+print(gradient_1D(func, dfunc,1, -0.1, N))
 print()
+
+
+#-------------------------------- Question 7  ---------------------------------
+def d2func(x):
+    y =6*x - 6
+    return y
+
+def gradient_1D_ameliore(func,dfunc, xn,d_2func,n):
+    
+    for i in range(1,n):
+        xn = xn + (-1/ d_2func(xn)) * dfunc(xn)
+    minimum = func(xn)
+    print(xn) 
+    return minimum
+
+print("Question 7 ")
+print("Par gradient 1D amélioré, on obtient maximum = ")
+print(gradient_1D_ameliore(func, dfunc, 1.1, d2func, N))
+print(minimum_reel)
+print()
+#Sur papier
 
 a = 0
 b = 3
@@ -144,15 +165,17 @@ for i in range(0,size):
 
 errgrad1D = np.zeros(size)
 for i in range(0,size):
-    errgrad1D[i] = abs(gradient_1D(func,dfunc,1,-0.5,i+1)-minimum_reel)
+    errgrad1D[i] = abs(gradient_1D(func,dfunc,1.1,-0.5,i+1)-minimum_reel)
+
+errgrad1D_am = np.zeros(size)
+for i in range(0,size):
+    errgrad1D_am[i] = abs(gradient_1D_ameliore(func,dfunc,1.5,d2func,i+1)-minimum_reel)
     
 x = [k for k in range(0,size)]
 plt.plot(x,errbalayconst, color = 'red')
 plt.plot(x,errbalayalea, color = 'blue')
-plt.plot(x,errgrad1D)
-plt.legend(["Balayage constant","Balayage aléatoire","Gradient 1D"])
-#-------------------------------- Question 7  ---------------------------------
-
-#Sur papier
+plt.plot(x,errgrad1D, color = "green")
+plt.plot(x,errgrad1D_am, color = 'yellow')
+plt.legend(["Balayage constant","Balayage aléatoire","Gradient 1D","Gradient amélioré"])
 
 # %%
