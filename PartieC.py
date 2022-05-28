@@ -80,7 +80,7 @@ def plot_3D_LN_gab(a,b):
     fig = plt.figure(figsize = (10,10))
     ax = plt.axes(projection='3d')
     ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
-    cmap='jet', edgecolor='none', alpha=0)
+    cmap='coolwarm', edgecolor='none', alpha=0.4)
     ax.set_title("contour g(x,y)_2,2/7", fontsize = 13)
     ax.contour(X, Y, Z, 20, colors="k", linestyles="solid")
     ax.set_xlabel('x', fontsize = 11)
@@ -95,7 +95,7 @@ def plot_3D_LN(func):
     fig2 = plt.figure(figsize = (10,10))
     ax = plt.axes(projection='3d')
     ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
-    cmap='coolwarm', edgecolor='none', alpha=0)
+    cmap='coolwarm', edgecolor='none', alpha=0.4)
     ax.set_title("contour h(x,y)", fontsize = 13)
     ax.contour(X, Y, Z, 20, colors="k", linestyles="solid")
     ax.set_xlabel('x', fontsize = 11)
@@ -129,10 +129,12 @@ def plot_2D_LN_gab(a,b):
     plt.ylabel('y', fontsize = 11)
     plt.show()
 
-# plot_3D_LN_gab(2,2/7)
-#  plot_3D_LN(h)
-# plot_2D_LN_gab(2,2/7)
-# plot_2D_LN(h)
+# tracé des lignes de contours 2D et 3D des fonctions h et g_ab
+plot_3D_LN_gab(2,2/7)
+plot_3D_LN(h)
+plot_2D_LN_gab(2,2/7)
+plot_2D_LN(h)
+
 #-------------------------------- Question 3  ---------------------------------
 
 def grad_g_ab(a,b,x,y):
@@ -227,7 +229,10 @@ def gradpc(eps, m, u, x0, y0, df1, df2,s):
         nb_iteration += 1
     fig5 = plt.figure(figsize = (15,10))
     plt.plot(X,Y)
+    plt.title("descente de gradient de " + s, fontsize = 13)
     plt.legend([s])
+    plt.xlabel('x', fontsize = 11)
+    plt.ylabel('y', fontsize = 11)
     return point
 
 def gradpc2(eps, m, u, x0, y0, f, df1, df2):
@@ -334,7 +339,6 @@ X = np.zeros(120)
 X = np.linspace(-0.99,-0.001,120) # pour u allant de -0.99 à -0.001 avec un pas automatique pour 120 valeurs
 for i in range(120):
     ERR.append(abs(g_120(0,0) - gradpc2(0.0001,100,X[i],7,1.5,g_120,dg_120_dx,dg_120_dy))/g_120(0,0))
-    print(gradpc2(0.0001,100,X[i],7,1.5,g_120,dg_120_dx,dg_120_dy))
 # tracé de l'erreur en fonction de u
 fig11 = plt.figure(figsize = (15,10))
 plt.plot(X,ERR, color = 'red')
@@ -360,6 +364,8 @@ X = []
 Y = []
 
 def gradamax(eps, m, u, x0, y0, f, df1, df2,s):
+    X = []
+    Y = []
     nb_iteration = 0
     grad = np.zeros(2)
     grad[0] = df1(x0,y0) 
@@ -384,11 +390,14 @@ def gradamax(eps, m, u, x0, y0, f, df1, df2,s):
         grad[1] = df2(point[0],point[1])
         nb_iteration += 1
         fig6 = plt.figure(figsize = (15,10))
-        plt.plot(X,Y, color = 'blue')
-        plt.legend([s])
+    plt.plot(X,Y, color = 'blue')
+    plt.title("Recherche du maximum de " + s, fontsize = 13)
+    plt.xlabel('X', fontsize = 11)
+    plt.ylabel('Y', fontsize = 11)
+    plt.legend([s])
     return point
     
-print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
+print("Pour h(x,y) avec x0 = 2 et y0 = 0 :")
 p = gradamax(0.001,100,0.1,2,0,h,dh_dx,dh_dy,"h(x,y)")
 print(p)
 print("h(x,y) = ")
@@ -438,13 +447,16 @@ def gradamin(eps, m, u, x0, y0, f, df1, df2,s):
         nb_iteration += 1
     fig7 = plt.figure(figsize = (15,10))
     plt.plot(X,Y, color = 'blue')
+    plt.title("Recherche du minimum de " + s, fontsize = 13)
+    plt.xlabel('X', fontsize = 11)
+    plt.ylabel('Y', fontsize = 11)
     plt.legend([s])
     return point
 
 def gradamin2(eps, m, u, x0, y0, f, df1, df2):
     nb_iteration = 0
     grad = np.zeros(2)
-    grad[0] = df1(x0,y0) 
+    grad[0] = df1(x0,y0)
     grad[1] = df2(x0,y0)
     point = [x0 , y0]
     k=0
@@ -495,5 +507,68 @@ x = [k for k in range(0,size)]
 fig8 = plt.figure(figsize = (15,10))
 plt.plot(x,errgradameliore, color = 'red')
 plt.plot(x,errgrad, color = 'blue')
+plt.title("Erreur de gradient", fontsize = 13)
+plt.xlabel("Nombre d'itérations", fontsize = 11)
+plt.ylabel("Erreur absolue", fontsize = 11)
 plt.legend(["Gradient amélioré","Gradient"])
+
+#-------------------------------- Question 10  ---------------------------------
+
+print("Question 10")
+
+# méthode permettant de récupérer le nombre d'itérations nécessaires pour atteindre le minimum via le gradient amélioré
+def gradaminIT(eps, m, u, x0, y0, f, df1, df2):
+    nb_iteration = 0
+    grad = np.zeros(2)
+    grad[0] = df1(x0,y0)
+    grad[1] = df2(x0,y0)
+    point = [x0 , y0]
+    k=0
+    f1 = F1(point[0],point[1],k,u,f,grad)
+    f2 = F2(point[0],point[1],k,u,f,grad)
+    while (norme_gradient(grad)>eps) and (nb_iteration <= m) :
+        k = 0
+        f1 = 1 #on réinitialise f1 et f2, si on ne le fait pas, on ne rentrera qu'une fois dans le while suivant
+        f2 = 0
+        while(f1>f2):
+            k += 1
+            f1 = F1(point[0],point[1],k,u,f,grad)
+            f2 = F2(point[0],point[1],k,u,f,grad)
+        
+        point = point + k * u * grad
+        grad[0] = df1(point[0],point[1])  
+        grad[1] = df2(point[0],point[1])
+        
+        nb_iteration += 1
+    return nb_iteration
+
+# méthode permettant de récupérer le nombre d'itérations nécessaires pour atteindre le minimum via le gradiant
+def gradpcIT(eps, m, u, x0, y0, df1, df2):
+    nb_iteration = 0
+    grad = np.zeros(2)
+    grad[0] = df1(x0,y0) 
+    grad[1] = df2(x0,y0)
+    point = [x0 , y0]
+    while (norme_gradient(grad)>eps) and (nb_iteration < m) :
+        point = point + u * grad
+        grad[0] = df1(point[0],point[1])
+        grad[1] = df2(point[0],point[1])
+        nb_iteration += 1
+    return nb_iteration
+
+X = np.zeros(120)
+X = np.linspace(-0.99,-0.001,100) # pour u allant de -0.99 à -0.001 avec un pas automatique pour 100 valeurs
+NBIGPC = []
+NBIGMIN = []
+for i in range(100):
+    NBIGPC.append(gradpcIT(0.0001,100,X[i],1,20,dg_120_dx,dg_120_dy))
+    NBIGMIN.append(gradaminIT(0.0001,100,X[i],1,20,g_120,dg_120_dx,dg_120_dy))
+
+fig30 = plt.figure(figsize = (15,10))
+plt.plot(X,NBIGPC, color = 'blue')
+plt.plot(X,NBIGMIN, color = 'red')
+plt.title("Nb d'itérations en fonction de u", fontsize = 13)
+plt.xlabel("u", fontsize = 11)
+plt.ylabel("Nombre d'itérations", fontsize = 11)
+plt.legend(["Gradient","Gradient amélioré"])
 # %%
