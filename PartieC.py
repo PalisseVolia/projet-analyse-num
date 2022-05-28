@@ -230,7 +230,7 @@ def gradpc(eps, m, u, x0, y0, df1, df2,s):
     plt.legend([s])
     return point
 
-def gradpc2(eps, m, u, x0, y0,f, df1, df2):
+def gradpc2(eps, m, u, x0, y0, f, df1, df2):
     nb_iteration = 0
     grad = np.zeros(2)
     grad[0] = df1(x0,y0) 
@@ -324,7 +324,24 @@ def dg_120_dy(x,y):
     return 2*y/10
 
 def g_120(x,y):
-    return (x**2)/1 + (y**2)/20
+    if x==0 and y==0 :
+        return 10**-5 # on approxime 0 par epsilon = 10^-5
+    else:
+        return (x**2)/1 + (y**2)/20
+        
+ERR = []
+X = np.zeros(120)
+X = np.linspace(-0.99,-0.001,120) # pour u allant de -0.99 à -0.001 avec un pas automatique pour 120 valeurs
+for i in range(120):
+    ERR.append(abs(g_120(0,0) - gradpc2(0.0001,100,X[i],7,1.5,g_120,dg_120_dx,dg_120_dy))/g_120(0,0))
+    print(gradpc2(0.0001,100,X[i],7,1.5,g_120,dg_120_dx,dg_120_dy))
+# tracé de l'erreur en fonction de u
+fig11 = plt.figure(figsize = (15,10))
+plt.plot(X,ERR, color = 'red')
+plt.title("Erreur relative en focntion de u", fontsize = 13)
+plt.xlabel('u', fontsize = 11)
+plt.ylabel('Erreur', fontsize = 11)
+plt.legend(["Erreur relative"])
 
 #-------------------------------- Question 8  ---------------------------------
 
