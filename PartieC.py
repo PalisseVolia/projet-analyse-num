@@ -313,11 +313,11 @@ def gradamax(eps, m, u, x0, y0, f, df1, df2,s):
 
         
     
-"""print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
-p = gradamax(0.001,100,0.1,2,0,h,dh_dx,dh_dy,"h(x,y)")
+print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
+p = gradamax(0.001,100,0.1,0,0,h,dh_dx,dh_dy,"h(x,y)")
 print(p)
 print("h(x,y) = ")
-print(h(p[0],p[1]))"""
+print(h(p[0],p[1]))
 
 """print("Pour h(x,y) avec x0 = 0 et y0 = 0 :")
 p = gradamax(0.001,100,0.1,7,1.5,g_227,dg_227_dx,dg_227_dy)
@@ -400,17 +400,19 @@ print("g(x,y) = ")
 print(g_227(p[0],p[1]))
 print()"""
 
-size = 30
-errgradameliore = np.zeros(size)
-for i in range(0,size):
-    errgradameliore[i] = abs(gradamin2(0.0001,i+1,-0.1,7,1.5,g_227,dg_227_dx,dg_227_dy))
 
-errgrad = np.zeros(size)
-for i in range(0,size):
-    errgrad[i] = abs(gradpc2(0.0001,i+1,-0.1,7,1.5,g_227,dg_227_dx,dg_227_dy))
+def graph_comparaison():
+    size = 30
+    errgradameliore = np.zeros(size)
+    for i in range(0,size):
+        errgradameliore[i] = abs(gradamin2(0.0001,i+1,-0.1,7,1.5,g_227,dg_227_dx,dg_227_dy))
 
-x = [k for k in range(0,size)]
-plt.plot(x,errgradameliore, color = 'red')
-plt.plot(x,errgrad, color = 'blue')
-plt.legend(["Gradient amélioré","Gradient"])
+    errgrad = np.zeros(size)
+    for i in range(0,size):
+        errgrad[i] = abs(gradpc2(0.0001,i+1,-0.1,7,1.5,g_227,dg_227_dx,dg_227_dy))
+
+    x = [k for k in range(0,size)]
+    plt.plot(x,errgradameliore, color = 'red')
+    plt.plot(x,errgrad, color = 'blue')
+    plt.legend(["Gradient amélioré","Gradient"])
 # %%
