@@ -2,6 +2,7 @@
 
 from turtle import color
 from matplotlib import colors
+from matplotlib.pyplot import title
 from mpl_toolkits import mplot3d
 import numpy as np
 import matplotlib.pyplot as plt
@@ -109,6 +110,9 @@ def plot_2D_LN(func):
     fig3 = plt.figure(figsize = (10,10))
     plt.axis('equal')
     plt.contour(X, Y, Z, 15)
+    plt.title("contour 2D h(x,y)", fontsize = 13)
+    plt.xlabel('x', fontsize = 11)
+    plt.ylabel('y', fontsize = 11)
     plt.show()
 
 def plot_2D_LN_gab(a,b):
@@ -119,12 +123,15 @@ def plot_2D_LN_gab(a,b):
     fig4 = plt.figure(figsize = (10,10))
     plt.axis('equal')
     plt.contour(X, Y, Z, 15)
+    plt.title("contour 2D gab(x,y)", fontsize = 13)
+    plt.xlabel('x', fontsize = 11)
+    plt.ylabel('y', fontsize = 11)
     plt.show()
 
-#plot_3D_LN_gab(2,2/7)
-#plot_3D_LN(h)
-#plot_2D_LN_gab(2,2/7)
-#plot_2D_LN(h)
+# plot_3D_LN_gab(2,2/7)
+#  plot_3D_LN(h)
+# plot_2D_LN_gab(2,2/7)
+# plot_2D_LN(h)
 #-------------------------------- Question 3  ---------------------------------
 
 def grad_g_ab(a,b,x,y):
