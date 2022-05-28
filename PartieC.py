@@ -63,8 +63,8 @@ def plot_3D(func):
     ax.set_ylabel('y', fontsize = 11)
     ax.set_zlabel('Z', fontsize = 10)
     
-#plot_3D_gab(2,2/7)
-#plot_3D(h)
+plot_3D_gab(2,2/7)
+plot_3D(h)
 print()
 
 #-------------------------------- Question 2  ---------------------------------
