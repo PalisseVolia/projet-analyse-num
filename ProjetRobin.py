@@ -512,7 +512,7 @@ def erreur_rpa(eps,m,x0,y0,f,df1,df2):
     U=[]
     u=-0.999
     while u<=0.001:
-        c.append(gradamini_g2(eps,u,x0,y0,f,df1,df2,a,b))
+        c.append(gradamini_g(eps,u,x0,y0,f,df1,df2,a,b))
         U.append(u)
         u=u+0.001
     plt.plot(U,c)
@@ -526,7 +526,7 @@ def erreur_comp(eps,x0,y0,f,df1,df2):
     U=[]
     u=-0.999
     while u<=0.001:
-        cpa.append(gradamini_g2(eps,u,x0,y0,f,df1,df2,a,b))
+        cpa.append(gradamini_g(eps,u,x0,y0,f,df1,df2,a,b))
         cpc.append(gradpc_g2(eps,u, x0, y0,f, df1, df2, a, b))
         U.append(u)
         u=u+0.001
