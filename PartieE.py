@@ -1,4 +1,5 @@
 #%%
+
 from turtle import color
 from matplotlib import colors
 from mpl_toolkits import mplot3d
@@ -13,6 +14,8 @@ import random
 
 #-------------------------------- Question 1  ---------------------------------
 
+print("\nQuestion 1 \n")
+
 def G(y):
     return 2*(np.matmul(A,y)-b)
 
@@ -22,11 +25,11 @@ def rho(y):
 	else:
 		return ((np.linalg.norm(G(y)))**2)/(2*np.matmul(np.transpose(G(y)),np.matmul(A,G(y))))
 
-def solveurg(A, b,t):             # A matrice carrée de taille n, b les n résutats des équantions du système d'équations
+def solveurg(A, b, t):              # A matrice carrée de taille n, b les n résutats des équantions du système d'équations
     m = 500
     n = len(A)
     eps = 10**-6
-    Yn = 3*np.ones(n)           # Initialisation de Yn avec des valeurs arbitraires (ici 3 pour toutes les composantes))
+    Yn = 3*np.ones(n)               # Initialisation de Yn avec des valeurs arbitraires (ici 3 pour toutes les composantes))
     nb_itérations = 0
     Y = Yn - rho(Yn)*G(Yn)
     while (nb_itérations <= m and np.linalg.norm(Y-Yn) > eps):
@@ -40,24 +43,23 @@ def solveurg(A, b,t):             # A matrice carrée de taille n, b les n résu
     return Yn
 
 n = 20
-A = np.zeros((n,n))
 A = np.diag(2*np.ones(n)) + np.diag(-1*np.ones(n-1),1) + np.diag(-1*np.ones(n-1),-1)
 b = np.zeros(n)
 b[0] = 500
 b[n-1] = 350
 
-print(A)
-print(b)
-print(solveurg(A,b,"Evolution de la température pour la paroi calorifugée"))
+print(solveurg(A,b,"Evolution de la température pour la paroi calorifugée (Question 1)"))
 
 #-------------------------------- Question 2  ---------------------------------
 
-eps = math.pow(10,-6)
+print("\nQuestion 2 \n")
+
+compteur = 0
+eps = 10**-6
 n = 100
 m = 10000000
-compteur = 0
-a=500
-B=350
+a = 500
+B = 350
 Ta = 300
 c = (1/0.1)**2
 f = c*Ta
@@ -68,6 +70,7 @@ A+= c*np.diag(np.ones(n),0)
 b = f*np.ones(n)  
 b[0] += a*((n+1)**2) 
 b[n-1] += B*((n+1)**2)
-print(solveurg(A,b, "Evolution de la température pour la paroi calorifugée"))
+
+print(solveurg(A,b, "Evolution de la température pour la paroi calorifugée (Question 2)"))
 
 # %%
