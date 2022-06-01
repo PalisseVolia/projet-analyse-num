@@ -1,3 +1,4 @@
+#%%
 
 from turtle import color
 from matplotlib import colors
@@ -17,9 +18,9 @@ import random
 
 #-------------------------------- Question 2  ---------------------------------
 
-eps = math.pow(10,-6)
+eps = 10**-6
 m = 100
-compteur = 0
+nb_itérations = 0
 
 b = np.array([-3,5])
 A = np.array([[9,0],[0,9]])
@@ -39,15 +40,15 @@ dernierY = np.array([2,2])
 
 Y = dernierY - rho(dernierY)*G(dernierY)
 dist = np.linalg.norm(Y-dernierY)
-while (compteur <= m and dist > eps):
-  compteur += 1
+while (nb_itérations <= m and dist > eps):
+  nb_itérations += 1
   dernierY = Y
   Y = dernierY - rho(dernierY)*G(dernierY)
   dist = np.linalg.norm(Y-dernierY)
   print(dist)
   
 plt.plot(x,err_balayage1,color="r")
-print("compteur : ", compteur)
+print("nb_itérations : ", nb_itérations)
 print("Y : ",dernierY)
 
 #-------------------------------- Question 3  ---------------------------------
