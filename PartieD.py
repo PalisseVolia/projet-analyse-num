@@ -13,13 +13,9 @@ import random
 
 #-------------------------------- Question 1  ---------------------------------
 
-
+# Voir le rapport
 
 #-------------------------------- Question 2  ---------------------------------
-
-import math
-import numpy as np
-
 
 eps = math.pow(10,-6)
 m = 100
@@ -53,5 +49,6 @@ while (compteur <= m and dist > eps):
 plt.plot(x,err_balayage1,color="r")
 print("compteur : ", compteur)
 print("Y : ",dernierY)
+
 #-------------------------------- Question 3  ---------------------------------
 
