@@ -17,14 +17,36 @@ import random
 
 #-------------------------------- Question 2  ---------------------------------
 
-def G(y,A,b):
-    return 2*(A*y-b)
+eps = 10 ** -6
+m = 100
+nb_iteration = 0
 
-def grad_pas_opti(y0, A, b):
-    pass
+b = np.array([-3,5])
+A = np.array([[9,0],[0,9]])
 
-A = [1,3]
-B=[5,4]
-print(A.dot(B))
+def G(y):
+  return 2*(np.matmul(A,y)-b)
+
+def rho(y):
+  if np.array_equal(G(y),[0,0]):
+    return 0
+  else:
+     num = (np.linalg.norm(G(y)))**2
+     den = 2*np.matmul(np.transpose(G(y)),np.matmul(A,G(y)))
+     return num/den
+
+yn = np.array([2,2])
+
+Y = yn - rho(yn)*G(yn)
+dist = np.linalg.norm(Y-yn)
+while (nb_iteration <= m and dist > eps):
+  nb_iteration += 1
+  yn = Y
+  Y = yn - rho(yn)*G(yn)
+  dist = np.linalg.norm(Y-yn)
+  print(dist)
+  
+
+
 #-------------------------------- Question 3  ---------------------------------
 
