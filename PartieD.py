@@ -18,12 +18,15 @@ import random
 
 #-------------------------------- Question 2  ---------------------------------
 
+n = 2
 eps = 10**-6
 m = 100
 nb_itérations = 0
 
-b = np.array([-3,5])
-A = np.array([[9,0],[0,9]])
+# 9x + 0y = -3	-> 	A[0,0]x A[0,1]y = b[0] 
+# 0x + 9y = 5	-> 	A[1,0]x A[1,1]y = b[1]
+b = np.array([-3,5])			# résutats des équantiosn du système d'équations
+A = np.array([[12,5],[5,12]])	# Matrice définie symmétrique positive de taille n
 
 def G(y):
 	return 2*(np.matmul(A,y)-b)
@@ -32,11 +35,9 @@ def rho(y):
 	if np.array_equal(G(y),[0,0]):
 		return 0
 	else:
-		num = (np.linalg.norm(G(y)))**2
-		den = 2*np.matmul(np.transpose(G(y)),np.matmul(A,G(y)))
-		return num/den
+		return ((np.linalg.norm(G(y)))**2)/(2*np.matmul(np.transpose(G(y)),np.matmul(A,G(y))))
 
-Yn = np.array([2,2])
+Yn = 2*np.ones(n)	# Initialisation de Yn avec des valeurs arbitraires (ici 2 pour toutes les composantes)
 
 Y = Yn - rho(Yn)*G(Yn)
 dist = np.linalg.norm(Y-Yn)
@@ -46,10 +47,12 @@ while (nb_itérations <= m and dist > eps):
 	Y = Yn - rho(Yn)*G(Yn)
 	dist = np.linalg.norm(Y-Yn)
 	print(dist)
-  
-plt.plot(x,err_balayage1,color="r")
-print("nb_itérations : ", nb_itérations)
-print("Y : ",Yn)
+
+print(Yn)
+
+# plt.plot(x,err_balayage1,color="r")
+# print("nb_itérations : ", nb_itérations)
+# print("Y : ",Yn)
 
 #-------------------------------- Question 3  ---------------------------------
 
