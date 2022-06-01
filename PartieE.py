@@ -51,25 +51,23 @@ print(b)
 print(solveurg(A,b,"Evolution de la température pour la paroi calorifugée"))
 
 #-------------------------------- Question 2  ---------------------------------
-n = 20
-A = np.zeros((n,n))
-A = np.diag(2*np.ones(n)) + np.diag(-1*np.ones(n-1),1) + np.diag(-1*np.ones(n-1),-1)
-dx = 1/(n+1)
-D = np.sqrt(0.1)
-a = 500
-b = 350
-Ta = 300
-c = (1/D)**2
-C = c * np.diag(np.ones(n))
-f = c*Ta
-B = np.zeros(n)
-for i in range(len(B)):
-    B[i] = (dx**2) * f
-B[0] = (dx**2) * f + a
-B[n-1] = (dx**2) * f + b
-print(B)
-Xn = A + dx**2 * C 
-print(solveurg(Xn,B,"Evolution de la température pour la paroi non calorifugée" ))
 
+eps = math.pow(10,-6)
+n = 100
+m = 10000000
+compteur = 0
+a=500
+B=350
+Ta = 300
+c = (1/0.1)**2
+f = c*Ta
+
+Y1 = np.zeros(n) 
+A = ((n+1)**2)*(np.diag(np.ones(n),0)*2 - np.diag(np.ones(n-1),1) - np.diag(np.ones(n-1),-1))
+A+= c*np.diag(np.ones(n),0)
+b = f*np.ones(n)  
+b[0] += a*((n+1)**2) 
+b[n-1] += B*((n+1)**2)
+print(solveurg(A,b, "Evolution de la température pour la paroi calorifugée"))
 
 # %%
