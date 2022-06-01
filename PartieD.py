@@ -18,6 +18,8 @@ import random
 
 #-------------------------------- Question 2  ---------------------------------
 
+print("\nQuestion 2 : ")
+
 # 9x + 0y = -3	-> 	A[0,0]x A[0,1]y = b[0] 
 # 0x + 9y = 5	-> 	A[1,0]x A[1,1]y = b[1]
 b = np.array([-6,9])			# résutats des équantions du système d'équations
@@ -47,49 +49,25 @@ def solveur(A, b):          # A matrice carrée de taille n, b les n résutats d
 
 #-------------------------------- Question 3  ---------------------------------
 
-# cas n = 2 :
+print("\nQuestion 3 : ")
+
+print("\ncas n=2 : \n")
+
 A = np.array([[12,5],[5,12]])
+print("matrice A : \n", A)
 b = np.array([-6,9])
+print("array b : \n", b)
 
+print("\nSolution : ")
 print(solveur(A,b))
 
-#cas n = 3 :
+print("\ncas n=3 : \n")
+
 A = np.array([[12,5,1],[5,12,1],[1,1,12]])
+print("matrice A : \n", A)
 b = np.array([-6,9,1])
+print("array b : \n", b)
 
+print("\nSolution : ")
 print(solveur(A,b))
-
-
-
-
-
-
-
-# Pour la question E :
-
-def solveurg(A, b):             # A matrice carrée de taille n, b les n résutats des équantions du système d'équations
-    m = 100
-    n = len(A)
-    eps = 10**-6
-    Yn = 3*np.ones(n)           # Initialisation de Yn avec des valeurs arbitraires (ici 3 pour toutes les composantes)
-    nb_itérations = 0
-    Y = Yn - rho(Yn)*G(Yn)
-    while (nb_itérations <= m and np.linalg.norm(Y-Yn) > eps):
-        nb_itérations += 1
-        Yn = Y
-        Y = Yn - rho(Yn)*G(Yn)
-    x = np.linspace(0,1,n)
-    plt.plot(x,Y)
-    return Yn
-
-n = 10
-A = np.zeros((n,n))
-A = np.diag(2*np.ones(n)) + np.diag(-1*np.ones(n-1),1) + np.diag(-1*np.ones(n-1),-1)
-b = np.zeros(n)
-b[0] = 500
-b[n-1] = 350
-
-print(A)
-print(b)
-print(solveurg(A,b))
 # %%
